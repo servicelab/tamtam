@@ -25,18 +25,3 @@ binaries:
       - .godeps
   tags:
     - docker
-
-docker-build:
-  stage: build
-  script:
-    - docker build --build-arg ci_commit_sha=$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME .
-  tags:
-    - gitlab-org
-
-docker-push:
-  stage: push
-  script:
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
-  tags:
-    - gitlab-org

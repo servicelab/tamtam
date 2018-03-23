@@ -6,6 +6,7 @@
  \__| \__,_||_| |_| |_| \__| \__,_||_| |_| |_|
 ```
 
+[![pipeline status](https://gitlab.com/eelco/tamtam/badges/master/pipeline.svg)](https://gitlab.com/eelco/tamtam/commits/master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/eelcocramer/tamtam)](https://goreportcard.com/report/github.com/eelcocramer/tamtam)
 
 ## Introduction
@@ -16,12 +17,15 @@ TamTam allows you to create a decentralized cluster on top of an IP network (bot
 
 TamTam uses the [Smudge](https://github.com/clockworksoul/smudge) library that provides group member discovery, status dissemination and failure detection to the cluster. Smudge implements the SWIM protocol [(paper)](https://pdfs.semanticscholar.org/8712/3307869ac84fc16122043a4a313604bd948f.pdf) [(explained 1)](https://asafdav2.github.io/2017/swim-protocol/) [(explained 2)](https://prakhar.me/articles/swim/).
 
+## Getting the binary
 
-### Command line interface
+Currently binaries are not automatically published yet. For the moment please build from source. See below for instructions.
+
+## Command line interface
 
 TamTam has the following options and commands:
 
-#### Options
+### Options
 
 ```
       --config string   Config file (default is $HOME/.tamtam.yaml)
@@ -32,7 +36,7 @@ TamTam has the following options and commands:
       --verbose         turn on verbose logging
 ```
 
-#### Commands
+### Commands
 * [tamtam address](docs/tamtam_address.md)	 - Gets the local bind address of a running agent
 * [tamtam agent](docs/tamtam_agent.md)	 - Starts a TamTam agent.
 * [tamtam broadcast](docs/tamtam_broadcast.md)	 - Broadcasts a message to other nodes in the network
@@ -47,7 +51,11 @@ TamTam has the following options and commands:
 * [tamtam stream](docs/tamtam_stream.md)	 - Streams broadcast events that are received from other nodes in the network
 * [tamtam version](docs/tamtam_version.md)	 - Prints the version number
 
-### gRPC interaface
+## gRPC interaface
 
 The gRPC protocol is described in [the protocol definition](service/service.proto). To build an RPC client that connects to the TamTam [agent](docs/tamtam_agent.md) please refer to the gRPC documentation for you programming language or check the source code of TamTam for golang examples. All TamTam commands, with the exception of `agent` and `gendoc` use a gRPC client to connect to the agent.
+
+## Building from source
+
+`go get -u github.com/eelcocramer/tamtam`
 

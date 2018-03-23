@@ -11,7 +11,7 @@
 
 ## Introduction
 
-TamTam is a convenience layer that provides a command line and [gRPC](https://grpc.io) interface to [Smudge](https://github.com/clockworksoul/smudge).
+TamTam is a utility that provides a command line and [gRPC](https://grpc.io) interface to [Smudge](https://github.com/clockworksoul/smudge).
 
 TamTam allows you to create a decentralized cluster on top of an IP network (both IPv4 and IPv6 are supported). It has a similar but simplified function as [Serf](https://www.serf.io).
 

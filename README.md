@@ -19,7 +19,7 @@ TamTam uses the [Smudge](https://github.com/clockworksoul/smudge) library that p
 
 ## Getting the binary
 
-Currently binaries are not automatically published yet. For the moment please build from source. See below for instructions.
+Binaries for Linux, MacOS and Windows are automatically being build by the CI/CD pipeline on each merge. Currently TamTam should be considered unstable. You can download the binaries own your own risk [here](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=binaries).
 
 ## Command line interface
 

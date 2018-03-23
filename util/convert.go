@@ -17,8 +17,8 @@ limitations under the License.
 package util
 
 import (
-	"github.com/eelcocramer/tamtam/service"
 	"github.com/clockworksoul/smudge"
+	"github.com/eelcocramer/tamtam/service"
 )
 
 // SmudgeToTamTamStatus converts a smudge node status to a TamTam status
@@ -60,7 +60,7 @@ func StatusToString(s service.Status) string {
 	case service.Status_ALIVE:
 		return "ALIVE"
 	case service.Status_FORWARD_TO:
-		return "FOWARD_TO"
+		return "FORWARD_TO"
 	case service.Status_SUSPECTED:
 		return "SUSPECTED"
 	default:

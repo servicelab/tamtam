@@ -19,8 +19,8 @@ package util
 import (
 	"sync"
 
-	"github.com/eelcocramer/tamtam/service"
 	"github.com/clockworksoul/smudge"
+	"github.com/eelcocramer/tamtam/service"
 )
 
 var monchannels = struct {

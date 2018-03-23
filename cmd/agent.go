@@ -24,9 +24,9 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/clockworksoul/smudge"
 	tt "github.com/eelcocramer/tamtam/service"
 	util "github.com/eelcocramer/tamtam/util"
-	"github.com/clockworksoul/smudge"
 	"github.com/spf13/cobra"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"

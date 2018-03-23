@@ -1,0 +1,150 @@
+/*
+Copyright 2018, Eelco Cramer and the TamTam contributors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.github.eelcocramer.tamtam.service";
+option java_outer_classname = "TamTamProto";
+
+package service;
+
+service TamTam {
+  /* Join adds remote node to the network
+   */
+  rpc Join (NodeAddress) returns (Response);
+
+  /* Leave removes a remote node from the network
+   */
+  rpc Leave (NodeAddress) returns (Response);
+
+  /* Broadcast sends an arbitrary data message to other
+   * healthy nodes in the network.
+   */
+  rpc Broadcast (Message) returns (Response);
+
+  /* Stream creates a stream with arbitrary broadcast messages
+   * received from other nodes in the network.
+   */
+  rpc Stream (Empty) returns (stream Message);
+
+  /* Monitor creates a stream with network status changes.
+   */
+  rpc Monitor (Empty) returns (stream Node);
+
+  /* NodeList creates a list containing information about
+   * other nodes in the network.
+   */
+  rpc Nodes (Empty) returns (NodeList);
+
+  /* Healthy creates a list containing information about
+   * all healthy nodes in the network
+   */
+  rpc Healthy (Empty) returns (NodeList);
+
+  /* SetHeartbeat changes the frequency this nodes sends out
+   * heartbeat messages to the network.
+   */
+  rpc SetHeartbeat (Heartbeat) returns (Response);
+
+  /* SetLogThreshold changes the log level the network agent output logs to the console
+   */
+  rpc SetLogThreshold (LogLevel) returns (Response);
+
+  /* Ping sends a ping message to another node in the network.
+   */
+  rpc Ping (NodeAddress) returns (Response);
+
+  /* LocalAddress returns the address of the local network agent.
+   */
+  rpc LocalAddress (Empty) returns (NodeAddress);
+}
+
+message NodeAddress {
+  // a valid IPv4 or IPv6 address
+  string IP = 1;
+  // the port number
+  uint32 port = 2;
+}
+
+message Response {
+  enum Code {
+    OK = 0;
+    ERROR = 1;
+  }
+  Code code = 1;
+}
+
+message Empty {
+}
+
+message Message {
+  bytes bytes = 1;
+}
+
+enum Status {
+  // Unknown is the default node status of newly-created nodes.
+  UNKNOWN = 0;
+  // Alive indicates that a node is alive and healthy.
+  ALIVE = 1;
+  // Suspected indicates that a node is suspected of being dead.
+  SUSPECTED = 2;
+  // Dead indicatates that a node is dead and no longer healthy.
+  DEAD = 3;
+  // ForwardTo is a pseudo status used by message to indicate
+  // the target of a ping request.
+  FORWARD_TO = 4;
+}
+
+message Node {
+  NodeAddress address = 1;
+  // Age is the time since we last heard from this node, in milliseconds.
+  uint32 age = 2;
+  // EmitCounter is the number of times remaining that current status will
+  // be emitted by this node to other nodes.
+  int32 emitCounter = 3;
+  // PingMillis is the milliseconds transpired between the most recent PING
+  // to this node and its responded ACK. If this node has not yet been pinged,
+  // this vaue will be PingNoData (-1). If this node's last PING timed out,
+  // this value will be PingTimedOut (-2).
+  int32 pingMillis = 4;
+  // Timestamp is the timestamp of this node's last ping or status update,
+  // in milliseconds from the epoch
+  uint32 timestamp = 5;
+  Status status = 6;
+}
+
+message NodeList {
+  repeated Node nodes = 1;
+}
+
+message Heartbeat {
+  int32 millis = 1;
+}
+
+message LogLevel {
+  enum Level {
+    ALL = 0;
+    TRACE = 1;
+    DEBUG = 2;
+    INFO = 3;
+    WARN = 4;
+    ERROR = 5;
+    FATAL = 6;
+    OFF = 7;
+  }
+  Level level = 1;
+}

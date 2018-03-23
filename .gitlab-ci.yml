@@ -1,0 +1,42 @@
+stages:
+  - build
+  - push
+  # - deploy
+
+binaries:
+  stage: build
+  image: golang:1.9
+  script:
+    - curl https://glide.sh/get | sh
+    - export SERVER_NAMESPACE=github.com
+    - mkdir -p /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAMESPACE
+    - export GOPATH=/go
+    - ln -s $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    - cd /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    - export GOBIN=$GOPATH/bin
+    - export PATH=$PATH:$GOPATH/bin
+    - ./dist.sh
+  artifacts:
+    paths:
+      - dist/
+  cache:
+    key: go-cache
+    paths:
+      - .godeps
+  tags:
+    - docker
+
+docker-build:
+  stage: build
+  script:
+    - docker build --build-arg ci_commit_sha=$CI_COMMIT_SHA -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME .
+  tags:
+    - shell
+
+docker-push:
+  stage: push
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
+  tags:
+    - shell

@@ -6,6 +6,7 @@
  \__| \__,_||_| |_| |_| \__| \__,_||_| |_| |_|
 ```
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/77c4150451274914a1442287307ae203)](https://app.codacy.com/app/eelcocramer/tamtam?utm_source=github.com&utm_medium=referral&utm_content=eelcocramer/tamtam&utm_campaign=badger)
 [![pipeline status](https://gitlab.com/eelco/tamtam/badges/master/pipeline.svg)](https://gitlab.com/eelco/tamtam/commits/master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/eelcocramer/tamtam)](https://goreportcard.com/report/github.com/eelcocramer/tamtam)
 

@@ -13,7 +13,7 @@
 
 ## Introduction
 
-TamTam is a convenience layer that provides a command line and [gRPC](https://grpc.io) interface to [Smudge](https://github.com/clockworksoul/smudge).
+TamTam is a utility that provides a command line and [gRPC](https://grpc.io) interface to [Smudge](https://github.com/clockworksoul/smudge).
 
 TamTam allows you to create a decentralized cluster on top of an IP network (both IPv4 and IPv6 are supported). It has a similar but simplified function as [Serf](https://www.serf.io).
 
@@ -21,7 +21,7 @@ TamTam uses the [Smudge](https://github.com/clockworksoul/smudge) library that p
 
 ## Getting the binary
 
-Binaries for Linux, MacOS and Windows are automatically being build by the CI/CD pipeline on each merge. Currently TamTam should be considered unstable. You can download the binaries own your own risk [here](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=binaries).
+Binaries for Linux, MacOS and Windows are automatically being build by the CI/CD pipeline on each merge. Currently TamTam should be considered unstable. You can download the binaries on your own risk [here](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=binaries).
 
 ## Command line interface
 

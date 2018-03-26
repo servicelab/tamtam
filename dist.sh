@@ -12,11 +12,11 @@ glide install
 NAME=tamtam
 
 # These are the values we want to pass for Version and BuildTime
-VERSION=`cat VERSION | awk '{print $1}'`
-BUILD_TIME=`date +%FT%T%z`
+VERSION=$(awk '{print $1}' < VERSION)
+BUILD_TIME=$(date +%FT%T%z)
 
 if [ -z "$2" ]; then
-    GIT_HASH=`git rev-parse HEAD`
+    GIT_HASH=$(git rev-parse HEAD)
 else
     GIT_HASH=$2
 fi
@@ -29,7 +29,6 @@ echo $LDFLAGS
 
 os=$(go env GOOS)
 arch=$(go env GOARCH)
-goversion=$(go version | awk '{print $3}')
 
 declare -a targets
 if [ -z "$1" ]; then

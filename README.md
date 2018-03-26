@@ -8,6 +8,8 @@
 
 [![pipeline status](https://gitlab.com/eelco/tamtam/badges/master/pipeline.svg)](https://gitlab.com/eelco/tamtam/commits/master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/eelcocramer/tamtam)](https://goreportcard.com/report/github.com/eelcocramer/tamtam)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fe65208ad49d49469f356cb07038b316)](https://www.codacy.com/app/eelcocramer/tamtam?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=eelcocramer/tamtam&amp;utm_campaign=Badge_Grade)
+[![codebeat badge](https://codebeat.co/badges/ba46fea2-17ab-439a-9eef-c0dce88df6b6)](https://codebeat.co/projects/github-com-eelcocramer-tamtam-master)
 
 ## Introduction
 

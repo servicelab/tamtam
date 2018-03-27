@@ -73,7 +73,7 @@ If you feel lucky you can try `go get -u github.com/eelcocramer/tamtam`
 
 Otherwise, you can setup the build environment by executing the following script:
 
-```
+```bash
 cd $GOPATH
 git clone https://github.com/eelcocramer/tamtam src/github.com/eelcocramer/tamtam
 cd src/github.com/eelcocramer/tamtam
@@ -84,13 +84,13 @@ glide install
 
 After that you are ready to build, some examples:
 
-```
+```bash
 ./dist.sh # builds TamTam for your current architecture
 ./dist.sh linux arm # builds TamTam for ARM based Linux distributions
 ./dist.sh freebsd 386 # builds TamTam fro i386 based FreeBSD
 ...
 ```
 
-You will find the TamTam binary you just build in `./dist`
+You will find the TamTam binary the current folder.
 
 

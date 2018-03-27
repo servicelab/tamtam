@@ -53,7 +53,7 @@ if [ $arch = 'arm' ] ; then
 fi
 
 echo "... building v$VERSION for $goos/$arch$goarm"
-TARGET="$NAME-v$VERSION-$goos"
+TARGET="$NAME-v$VERSION-$goos-$arch"
 if [ $goos = 'windows' ] ; then
     BINARY=$NAME.exe
 else
@@ -62,7 +62,4 @@ fi
 
 BUILD=$(mktemp -d -t $NAME.XXXX)
 GOOS=$goos GOARCH=$arch GOARM=$goarm CGO_ENABLED=0 go build -ldflags "$LDFLAGS" -o $BUILD/$TARGET/$BINARY || exit 1
-
-pushd $BUILD
-mv $TARGET/$BINARY $DIR/dist
-popd
+mv $BUILD/$TARGET/$BINARY $DIR

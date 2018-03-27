@@ -28,25 +28,28 @@ build:osx:
     stage: build
     image: golang:1.9
     script:
-        - ./dist.sh darwin amd64
+      - ./dist.sh darwin amd64
     artifacts:
-        paths: ./dist/tamtam-v1.0.0-SNAPSHOT-darwin.tar.gz
+      paths:
+        - ./dist/tamtam-v1.0.0-SNAPSHOT-darwin.tar.gz
 
 build:linux:amd64:
     stage: build
     image: golang:1.9
     script:
-        - ./dist.sh linux amd64
-        - mv dist/tamtam-v1.0.0-SNAPSHOT-linux.tar.gz dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+      - ./dist.sh linux amd64
+      - mv dist/tamtam-v1.0.0-SNAPSHOT-linux.tar.gz dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
     artifacts:
-        paths: ./dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+      paths:
+        - ./dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
 
 build:windows:
     stage: build
     image: golang:1.9
     script:
-        - ./dist.sh windows amd64
+      - ./dist.sh windows amd64
     artifacts:
-        paths: ./dist/tamtam-v1.0.0-SNAPSHOT-windows.tar.gz
+      paths:
+        ./dist/tamtam-v1.0.0-SNAPSHOT-windows.tar.gz
 
 

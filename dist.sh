@@ -39,7 +39,20 @@ mkdir -p $DIR/dist
 # Setup the -ldflags option for go build here, interpolate the variable values
 LDFLAGS="-X $PACKAGE/cmd.Version=$VERSION -X $PACKAGE/cmd.BuildTime=$BUILD_TIME -X $PACKAGE/cmd.GitHash=$GIT_HASH"
 
-echo "... building v$VERSION for $goos/$arch"
+declare -a goarm
+if [ $arch = 'arm' ] ; then
+    if [ $goos = 'darwin' ] ; then
+        goarm=7
+    else
+        if [ $goos = 'linux' ] ; then
+            goarm=5
+        else
+            goarm=6
+        fi
+    fi
+fi
+
+echo "... building v$VERSION for $goos/$arch$goarm"
 TARGET="$NAME-v$VERSION-$goos"
 if [ $goos = 'windows' ] ; then
     BINARY=$NAME.exe
@@ -48,10 +61,8 @@ else
 fi
 
 BUILD=$(mktemp -d -t $NAME.XXXX)
-GOOS=$goos GOARCH=$arch CGO_ENABLED=0 go build -ldflags "$LDFLAGS" -o $BUILD/$TARGET/$BINARY || exit 1
+GOOS=$goos GOARCH=$arch GOARM=$goarm CGO_ENABLED=0 go build -ldflags "$LDFLAGS" -o $BUILD/$TARGET/$BINARY || exit 1
 
-# Only tar if no specific target was specified
 pushd $BUILD
-tar czvf $TARGET.tar.gz $TARGET
-mv $TARGET.tar.gz $DIR/dist
+mv $TARGET/$BINARY $DIR/dist
 popd

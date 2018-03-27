@@ -28,32 +28,56 @@ install:
   tags:
     - docker
 
-build:osx:
-    stage: build
-    image: golang:1.9
-    script:
-      - ./dist.sh darwin amd64
-    artifacts:
-      paths:
-        - dist/tamtam-v1.0.0-SNAPSHOT-darwin.tar.gz
+macos:
+  stage: build
+  image: golang:1.9
+  script:
+    - ./dist.sh darwin amd64
+  artifacts:
+    name: "tamtam-v1.0.0-SNAPSHOT-$CI_JOB_NAME"
+    paths:
+      - dist/tamtam
 
-build:linux:amd64:
-    stage: build
-    image: golang:1.9
-    script:
-      - ./dist.sh linux amd64
-      - mv dist/tamtam-v1.0.0-SNAPSHOT-linux.tar.gz dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
-    artifacts:
-      paths:
-        - dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+linux-amd64:
+  stage: build
+  image: golang:1.9
+  script:
+    - ./dist.sh linux amd64
+    - mv dist/tamtam-v1.0.0-SNAPSHOT-linux.tar.gz dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+  artifacts:
+    name: "tamtam-v1.0.0-SNAPSHOT-$CI_JOB_NAME"
+    paths:
+      - dist/tamtam
 
-build:windows:
-    stage: build
-    image: golang:1.9
-    script:
-      - ./dist.sh windows amd64
-    artifacts:
-      paths:
-        - dist/tamtam-v1.0.0-SNAPSHOT-windows.tar.gz
+linux-i386:
+  stage: build
+  image: golang:1.9
+  script:
+    - ./dist.sh linux 386
+    - mv dist/tamtam-v1.0.0-SNAPSHOT-linux.tar.gz dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+  artifacts:
+    name: "tamtam-v1.0.0-SNAPSHOT-$CI_JOB_NAME"
+    paths:
+      - dist/tamtam
 
+linux-arm:
+  stage: build
+  image: golang:1.9
+  script:
+    - ./dist.sh linux arm
+    - mv dist/tamtam-v1.0.0-SNAPSHOT-linux.tar.gz dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+  artifacts:
+    name: "tamtam-v1.0.0-SNAPSHOT-$CI_JOB_NAME"
+    paths:
+      - dist/tamtam
+
+windows:
+  stage: build
+  image: golang:1.9
+  script:
+    - ./dist.sh windows amd64
+  artifacts:
+    name: "tamtam-v1.0.0-SNAPSHOT-$CI_JOB_NAME"
+    paths:
+      - dist/tamtam
 

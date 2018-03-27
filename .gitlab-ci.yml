@@ -1,10 +1,9 @@
 stages:
+  - install
   - build
-  - push
-  # - deploy
 
-binaries:
-  stage: build
+install:
+  stage: install
   image: golang:1.9
   script:
     - curl https://glide.sh/get | sh
@@ -15,13 +14,39 @@ binaries:
     - cd /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
     - export GOBIN=$GOPATH/bin
     - export PATH=$PATH:$GOPATH/bin
-    - ./dist.sh
+    - glide install
   artifacts:
-    paths:
-      - dist/
+      expire_in: 10 mins
   cache:
     key: go-cache
     paths:
       - .godeps
   tags:
     - docker
+
+build:osx:
+    stage: build
+    image: golang:1.9
+    script:
+        - ./dist.sh darwin amd64
+    artifacts:
+        path: ./dist/tamtam-v1.0.0-SNAPSHOT-darwin.tar.gz
+
+build:linux:amd64:
+    stage: build
+    image: golang:1.9
+    script:
+        - ./dist.sh linux amd64
+        - mv dist/tamtam-v1.0.0-SNAPSHOT-linux.tar.gz dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+    artifacts:
+        path: ./dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+
+build:windows:
+    stage: build
+    image: golang:1.9
+    script:
+        - ./dist.sh windows amd64
+    artifacts:
+        path: ./dist/tamtam-v1.0.0-SNAPSHOT-windows.tar.gz
+
+

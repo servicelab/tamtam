@@ -21,7 +21,17 @@ TamTam uses the [Smudge](https://github.com/clockworksoul/smudge) library that p
 
 ## Getting the binary
 
-Binaries for Linux, MacOS and Windows are automatically being build by the CI/CD pipeline on each merge. Currently TamTam should be considered unstable. You can download the binaries on your own risk [here](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=binaries).
+> Currently TamTam should be considered unstable. Use the binaries at your own risk.
+
+Binaries are automatically being build by the CI/CD pipeline on each merge. When the build pipeline passed successfully you can download the binaries via the links below:
+
+* [MacOS amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=macos)
+* [Windows amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=windows)
+* [Linux amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-amd64)
+* [Linux i386](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-i386)
+* [Linux arm](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-arm)
+
+Other binaries may be build from source.
 
 ## Command line interface
 
@@ -59,5 +69,28 @@ The gRPC protocol is described in [the protocol definition](service/service.prot
 
 ## Building from source
 
-`go get -u github.com/eelcocramer/tamtam`
+If you feel lucky you can try `go get -u github.com/eelcocramer/tamtam`
+
+Otherwise, you can setup the build environment by executing the following script:
+
+```
+cd $GOPATH
+git clone https://github.com/eelcocramer/tamtam src/github.com/eelcocramer/tamtam
+cd src/github.com/eelcocramer/tamtam
+# install glide
+curl https://glide.sh/get | sh
+glide install
+```
+
+After that you are ready to build, some examples:
+
+```
+./dist.sh # builds TamTam for your current architecture
+./dist.sh linux arm # builds TamTam for ARM based Linux distributions
+./dist.sh freebsd 386 # builds TamTam fro i386 based FreeBSD
+...
+```
+
+You will find the TamTam binary you just build in `./dist`
+
 

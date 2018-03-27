@@ -16,7 +16,7 @@ install:
     - export PATH=$PATH:$GOPATH/bin
     - glide install
   artifacts:
-      expire_in: 10 mins
+    expire_in: 10 mins
   cache:
     key: go-cache
     paths:
@@ -31,7 +31,7 @@ build:osx:
       - ./dist.sh darwin amd64
     artifacts:
       paths:
-        - ./dist/tamtam-v1.0.0-SNAPSHOT-darwin.tar.gz
+        - dist/tamtam-v1.0.0-SNAPSHOT-darwin.tar.gz
 
 build:linux:amd64:
     stage: build
@@ -41,7 +41,7 @@ build:linux:amd64:
       - mv dist/tamtam-v1.0.0-SNAPSHOT-linux.tar.gz dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
     artifacts:
       paths:
-        - ./dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+        - dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
 
 build:windows:
     stage: build
@@ -50,6 +50,6 @@ build:windows:
       - ./dist.sh windows amd64
     artifacts:
       paths:
-        ./dist/tamtam-v1.0.0-SNAPSHOT-windows.tar.gz
+        - dist/tamtam-v1.0.0-SNAPSHOT-windows.tar.gz
 
 

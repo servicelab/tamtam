@@ -2,20 +2,24 @@ stages:
   - install
   - build
 
+before_script:
+  - export SERVER_NAMESPACE=github.com/eelcocramer
+  - mkdir -p /go/src/$SERVER_NAMESPACE
+  - export GOPATH=/go
+  - ln -s $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
+  - cd /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
+  - export GOBIN=$GOPATH/bin
+  - export PATH=$PATH:$GOPATH/bin
+
 install:
   stage: install
   image: golang:1.9
   script:
     - curl https://glide.sh/get | sh
-    - export SERVER_NAMESPACE=github.com/eelcocramer
-    - mkdir -p /go/src/$SERVER_NAMESPACE
-    - export GOPATH=/go
-    - ln -s $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
-    - cd /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
-    - export GOBIN=$GOPATH/bin
-    - export PATH=$PATH:$GOPATH/bin
-    - glide install
+    - glide update
   artifacts:
+    paths:
+      - vendor
     expire_in: 10 mins
   cache:
     key: go-cache

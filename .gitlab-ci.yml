@@ -30,7 +30,7 @@ build:osx:
     script:
         - ./dist.sh darwin amd64
     artifacts:
-        path: ./dist/tamtam-v1.0.0-SNAPSHOT-darwin.tar.gz
+        paths: ./dist/tamtam-v1.0.0-SNAPSHOT-darwin.tar.gz
 
 build:linux:amd64:
     stage: build
@@ -39,7 +39,7 @@ build:linux:amd64:
         - ./dist.sh linux amd64
         - mv dist/tamtam-v1.0.0-SNAPSHOT-linux.tar.gz dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
     artifacts:
-        path: ./dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
+        paths: ./dist/tamtam-v1.0.0-SNAPSHOT-linux-amd64.tar.gz
 
 build:windows:
     stage: build
@@ -47,6 +47,6 @@ build:windows:
     script:
         - ./dist.sh windows amd64
     artifacts:
-        path: ./dist/tamtam-v1.0.0-SNAPSHOT-windows.tar.gz
+        paths: ./dist/tamtam-v1.0.0-SNAPSHOT-windows.tar.gz
 
 

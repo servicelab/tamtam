@@ -8,7 +8,7 @@ WORKDIR /go/src/github.com/servicelab/tamtam
 RUN ./dist.sh linux "$git_commit_sha"
 
 # final stage
-FROM alpine:3.7
+FROM scratch
 MAINTAINER eelco@servicelab.org
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/servicelab/tamtam/tamtam /app/

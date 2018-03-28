@@ -28,6 +28,7 @@ import (
 	tt "github.com/eelcocramer/tamtam/service"
 	util "github.com/eelcocramer/tamtam/util"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -206,7 +207,7 @@ var agentCmd = &cobra.Command{
 	Long: `Starts a TamTam agent that keeps a connection to the gossip network
 and listens to RPC command on the RCP interface.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		lis, err := net.Listen("tcp", cfg.RPCAddr)
+		lis, err := net.Listen("tcp", viper.GetString("rpc"))
 		if err != nil {
 			log.Fatalf("error starting the rpc server, failed to listen: %v", err)
 		}
@@ -223,10 +224,10 @@ and listens to RPC command on the RCP interface.`,
 		ip := net.ParseIP(bind)
 		smudge.SetListenIP(ip)
 		smudge.SetLogThreshold(smudge.LogWarn)
-		if cfg.Verbose {
+		if viper.GetBool("verbose") {
 			smudge.SetLogThreshold(smudge.LogDebug)
 		}
-		if cfg.Trace {
+		if viper.GetBool("trace") {
 			smudge.SetLogThreshold(smudge.LogTrace)
 		}
 		smudge.SetListenPort(port)
@@ -235,12 +236,11 @@ and listens to RPC command on the RCP interface.`,
 		if ip.To4() == nil {
 			smudge.SetMaxBroadcastBytes(512)
 		}
-
 		smudge.SetMulticastEnabled(false)
 		smudge.SetClusterName("tamtam")
 
 		go func() {
-			log.Printf("Listening for gRPC at %s\n", cfg.RPCAddr)
+			log.Printf("Listening for gRPC at %s\n", viper.GetString("rpc"))
 			if ip.To4() != nil {
 				log.Printf("Listening for gossip at %s:%d\n", bind, port)
 			} else {

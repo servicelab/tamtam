@@ -3,7 +3,7 @@ stages:
   - build
 
 before_script:
-  - export SERVER_NAMESPACE=github.com/eelcocramer
+  - export SERVER_NAMESPACE=github.com/servicelab
   - mkdir -p /go/src/$SERVER_NAMESPACE
   - export GOPATH=/go
   - ln -s $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME

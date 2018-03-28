@@ -13,7 +13,7 @@ before_script:
 
 install:
   stage: install
-  image: golang:1.9
+  image: golang:1.10
   script:
     - curl https://glide.sh/get | sh
     - glide update
@@ -30,7 +30,7 @@ install:
 
 macos:
   stage: build
-  image: golang:1.9
+  image: golang:1.10
   script:
     - ./dist.sh darwin amd64
   artifacts:
@@ -40,7 +40,7 @@ macos:
 
 linux-amd64:
   stage: build
-  image: golang:1.9
+  image: golang:1.10
   script:
     - ./dist.sh linux amd64
   artifacts:
@@ -50,7 +50,7 @@ linux-amd64:
 
 linux-i386:
   stage: build
-  image: golang:1.9
+  image: golang:1.10
   script:
     - ./dist.sh linux 386
   artifacts:
@@ -60,7 +60,7 @@ linux-i386:
 
 linux-arm:
   stage: build
-  image: golang:1.9
+  image: golang:1.10
   script:
     - ./dist.sh linux arm
   artifacts:
@@ -70,7 +70,7 @@ linux-arm:
 
 windows:
   stage: build
-  image: golang:1.9
+  image: golang:1.10
   script:
     - ./dist.sh windows amd64
   artifacts:

@@ -22,8 +22,8 @@ import (
 	"os"
 	"text/tabwriter"
 
-	tt "github.com/eelcocramer/tamtam/service"
-	"github.com/eelcocramer/tamtam/util"
+	tt "github.com/servicelab/tamtam/service"
+	"github.com/servicelab/tamtam/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"golang.org/x/net/context"

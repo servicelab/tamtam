@@ -5,7 +5,7 @@ set -e
 
 # This is how we want to name the binary output
 NAME=tamtam
-PACKAGE="github.com/eelcocramer/tamtam"
+PACKAGE="github.com/servicelab/tamtam"
 
 declare -a goos
 if [ -z "$1" ]; then

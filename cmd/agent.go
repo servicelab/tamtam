@@ -235,7 +235,6 @@ and listens to RPC command on the RCP interface.`,
 		if ip.To4() == nil {
 			smudge.SetMaxBroadcastBytes(512)
 		}
-
 		smudge.SetMulticastEnabled(false)
 		smudge.SetClusterName("tamtam")
 

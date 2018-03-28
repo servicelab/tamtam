@@ -63,6 +63,52 @@ TamTam has the following options and commands:
 * [tamtam stream](docs/tamtam_stream.md)	 - Streams broadcast events that are received from other nodes in the network
 * [tamtam version](docs/tamtam_version.md)	 - Prints the version number
 
+## Usage example
+
+In the example below we will run 2 agents that connect to each other. We will demonstrate how to connect to the broadcast stream and how to broadcast a message in the network.
+
+Open a terminal window and issue the following command to start a TamTam agent:
+
+```bash
+./tamtam agent
+```
+
+You should now see logging indicating that TamTam is running and a warning that it detected a new node (namely itself). Now lets start another agent running on another port. Open another terminal window and execute the following command:
+
+```bash
+./tamtam --rpc localhost:6363 agent -p 9998
+```
+
+When the second agent is also running you can ask one of the agents to join the other and after that to start listening to broadcast messages. Open another terminal and issue the following commands:
+
+```bash
+./tamtam join 127.0.0.1:9998
+./tamtam stream
+```
+
+The first command should give you a message that the remote host was joined. The second command is waiting for broadcast messages to display. Lets send a broadcast message... Open another terminal and execute the following command:
+
+```bash
+./tamtam --rpc localhost:6363 broadcast "Hello world!"
+```
+
+The broadcast message should now appear `stream` process at the 3rd terminal window.
+
+The next step is to bind the messages to your own process of script. This can be done by using the gRPC interface or by binding the broadcast stream to a script. Take for example the following `handler.sh` bash script:
+
+```bash
+#!/bin/bash
+while read msg; do
+    printf "${msg}\n"
+done
+```
+
+You can bind this script to TamTam using the following command:
+
+```bash
+./tamtam stream | ./handler.sh
+```
+
 ## gRPC interaface
 
 The gRPC protocol is described in [the protocol definition](service/service.proto). To build an RPC client that connects to the TamTam [agent](docs/tamtam_agent.md) please refer to the gRPC documentation for you programming language or check the source code of TamTam for golang examples. All TamTam commands, with the exception of `agent` and `gendoc` use a gRPC client to connect to the agent.

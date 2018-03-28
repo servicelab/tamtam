@@ -26,6 +26,7 @@ import (
 	tt "github.com/eelcocramer/tamtam/service"
 	"github.com/eelcocramer/tamtam/util"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
@@ -41,7 +42,7 @@ var monitorCmd = &cobra.Command{
 		w.Init(os.Stdout, 0, 8, 0, '\t', 0)
 		fmt.Fprintln(w, "NODE\tAGE\tEMIT #\tMILLIS\tSTATUS")
 
-		conn, err := grpc.Dial(cfg.RPCAddr, grpc.WithInsecure())
+		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
 			log.Fatalf("did not connect to RPC server: %v", err)
 		}

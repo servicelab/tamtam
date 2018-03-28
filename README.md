@@ -109,6 +109,31 @@ You can bind this script to TamTam using the following command:
 ./tamtam stream | ./handler.sh
 ```
 
+## Configuration
+
+TamTam can be configured using a configuration file, environment variables or command line. Note that command line takes precedence over the environment variables which in their turn take precedence over the values from the configuration file.
+
+The default location for the configuration file is `$HOME/.tamtam.yml` but you can also specify the location via the command line option `--config`. Currently only a few global option can be configured using the environment or configuration file.
+
+Example of the configuration file:
+
+```yml
+nobanner: false
+verbose: false
+trace: false
+rpc: "localhost:6262"
+```
+
+The following environment variables are supported:
+
+```
+Variable        | Description
+--------------- | -----------------------------------------------------------------------
+TAMTAM_NOBANNER | When set TamTam won't print out the banner on startup
+TAMTAM_VERBOSE  | Set to enable verbose logging
+TAMTAM_TRACE    | Set to enable trace logging
+TAMTAM_RPC      | The host and port to bind the RPC interface to. Default: localhost:6262
+```
 ## gRPC interaface
 
 The gRPC protocol is described in [the protocol definition](service/service.proto). To build an RPC client that connects to the TamTam [agent](docs/tamtam_agent.md) please refer to the gRPC documentation for you programming language or check the source code of TamTam for golang examples. All TamTam commands, with the exception of `agent` and `gendoc` use a gRPC client to connect to the agent.

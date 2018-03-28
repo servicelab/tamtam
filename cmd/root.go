@@ -17,8 +17,6 @@ limitations under the License.
 package cmd
 
 import (
-	"github.com/eelcocramer/tamtam/config"
-
 	"github.com/CrowdSurge/banner"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -27,16 +25,21 @@ import (
 	"os"
 )
 
-var cfgFile string
+var (
+	file     string
+	verbose  bool
+	trace    bool
+	rpcAddr  string
+	noBanner bool
+)
 
 func init() {
-	cfg = config.Manager{}
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVar(&cfg.File, "config", "", "Config file (default is $HOME/.tamtam.yaml)")
-	rootCmd.PersistentFlags().BoolVar(&cfg.Verbose, "verbose", false, "turn on verbose logging")
-	rootCmd.PersistentFlags().BoolVar(&cfg.Trace, "trace", false, "turn on trace logging")
-	rootCmd.PersistentFlags().StringVar(&cfg.RPCAddr, "rpc", "localhost:6262", "The RPC address the agent binds to or other commands query a running agent on")
-	rootCmd.PersistentFlags().BoolVar(&cfg.NoBanner, "nobanner", false, "disables printing the banner")
+	rootCmd.PersistentFlags().StringVar(&file, "config", "", "Config file (default is $HOME/.tamtam.yaml)")
+	rootCmd.PersistentFlags().BoolVar(&verbose, "verbose", false, "turn on verbose logging")
+	rootCmd.PersistentFlags().BoolVar(&trace, "trace", false, "turn on trace logging")
+	rootCmd.PersistentFlags().StringVar(&rpcAddr, "rpc", "localhost:6262", "The RPC address the agent binds to or other commands query a running agent on")
+	rootCmd.PersistentFlags().BoolVar(&noBanner, "nobanner", false, "disables printing the banner")
 	viper.BindPFlag("verbose", rootCmd.PersistentFlags().Lookup("verbose"))
 	viper.BindPFlag("trace", rootCmd.PersistentFlags().Lookup("trace"))
 	viper.BindPFlag("rpc", rootCmd.PersistentFlags().Lookup("rpc"))
@@ -49,12 +52,15 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	if cfg.File != "" { // enable ability to specify config file via flag
-		viper.SetConfigFile(cfg.File)
+	viper.AutomaticEnv() // read in environment variables that match
+	viper.SetEnvPrefix("TAMTAM")
+
+	if file != "" { // enable ability to specify config file via flag
+		viper.SetConfigFile(file)
+	} else {
+		viper.SetConfigName(".tamtam")         // name of config file (without extension)
+		viper.AddConfigPath(os.Getenv("HOME")) // adding home directory as first search path
 	}
-	viper.SetConfigName(".tamtam")         // name of config file (without extension)
-	viper.AddConfigPath(os.Getenv("HOME")) // adding home directory as first search path
-	viper.AutomaticEnv()                   // read in environment variables that match
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
@@ -75,7 +81,7 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	if !cfg.NoBanner {
+	if viper.GetBool("nobanner") {
 		fmt.Fprintln(os.Stderr, banner.PrintS("tamtam"))
 	}
 
@@ -83,5 +89,3 @@ func Execute() {
 		os.Exit(1)
 	}
 }
-
-var cfg config.Manager

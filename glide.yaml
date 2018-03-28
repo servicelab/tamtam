@@ -12,7 +12,7 @@ import:
   subpackages:
   - context
 - package: google.golang.org/grpc
-  version: ^1.9.2
+  version: ^1.11.0
   subpackages:
   - reflection
 - package: github.com/cpuguy83/go-md2man

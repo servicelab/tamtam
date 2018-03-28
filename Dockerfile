@@ -1,5 +1,5 @@
 # build stage
-FROM golang:1.9 AS build-env
+FROM golang:1.10 AS build-env
 MAINTAINER eelco@servicelab.org
 ARG git_commit_sha
 RUN curl https://glide.sh/get | sh

@@ -81,7 +81,7 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	if viper.GetBool("nobanner") {
+	if !viper.GetBool("nobanner") {
 		fmt.Fprintln(os.Stderr, banner.PrintS("tamtam"))
 	}
 

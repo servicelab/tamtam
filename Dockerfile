@@ -3,13 +3,13 @@ FROM golang:1.9 AS build-env
 MAINTAINER eelco@servicelab.org
 ARG git_commit_sha
 RUN curl https://glide.sh/get | sh
-COPY . /go/src/github.com/eelcocramer/tamtam
-WORKDIR /go/src/github.com/eelcocramer/tamtam
+COPY . /go/src/github.com/servicelab/tamtam
+WORKDIR /go/src/github.com/servicelab/tamtam
 RUN ./dist.sh linux "$git_commit_sha"
 
 # final stage
 FROM alpine:3.7
 MAINTAINER eelco@servicelab.org
 WORKDIR /app
-COPY --from=build-env /go/src/github.com/eelcocramer/tamtam/tamtam /app/
+COPY --from=build-env /go/src/github.com/servicelab/tamtam/tamtam /app/
 ENTRYPOINT ./tamtam

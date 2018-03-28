@@ -25,8 +25,8 @@ import (
 	"syscall"
 
 	"github.com/clockworksoul/smudge"
-	tt "github.com/eelcocramer/tamtam/service"
-	util "github.com/eelcocramer/tamtam/util"
+	tt "github.com/servicelab/tamtam/service"
+	util "github.com/servicelab/tamtam/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"golang.org/x/net/context"

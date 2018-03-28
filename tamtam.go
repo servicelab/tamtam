@@ -17,7 +17,7 @@ limitations under the License.
 package main
 
 import (
-	"github.com/eelcocramer/tamtam/cmd"
+	"github.com/servicelab/tamtam/cmd"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-package: github.com/eelcocramer/tamtam
+package: github.com/servicelab/tamtam
 import:
 - package: github.com/golang/protobuf
   subpackages:

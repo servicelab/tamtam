@@ -24,7 +24,7 @@ import (
 	"log"
 	"os"
 
-	tt "github.com/eelcocramer/tamtam/service"
+	tt "github.com/servicelab/tamtam/service"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"golang.org/x/net/context"

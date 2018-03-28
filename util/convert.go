@@ -18,7 +18,7 @@ package util
 
 import (
 	"github.com/clockworksoul/smudge"
-	"github.com/eelcocramer/tamtam/service"
+	"github.com/servicelab/tamtam/service"
 )
 
 // SmudgeToTamTamStatus converts a smudge node status to a TamTam status

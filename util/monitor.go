@@ -20,7 +20,7 @@ import (
 	"sync"
 
 	"github.com/clockworksoul/smudge"
-	"github.com/eelcocramer/tamtam/service"
+	"github.com/servicelab/tamtam/service"
 )
 
 var monchannels = struct {

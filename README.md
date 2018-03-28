@@ -6,7 +6,7 @@
  \__| \__,_||_| |_| |_| \__| \__,_||_| |_| |_|
 ```
 
-[![pipeline status](https://gitlab.com/eelco/tamtam/badges/master/pipeline.svg)](https://gitlab.com/eelco/tamtam/commits/master)
+[![pipeline status](https://gitlab.com/eelco/tamtam/badges/master/pipeline.svg)](https://gitlab.com/eelco/tamtam/pipelines)
 [![Go Report Card](https://goreportcard.com/badge/github.com/servicelab/tamtam)](https://goreportcard.com/report/github.com/servicelab/tamtam)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/39f89f19b7c7405ab9f6e9a15de19cb5)](https://www.codacy.com/app/eelcocramer/tamtam?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=servicelab/tamtam&amp;utm_campaign=Badge_Grade)
 [![codebeat badge](https://codebeat.co/badges/ba46fea2-17ab-439a-9eef-c0dce88df6b6)](https://codebeat.co/projects/github-com-servicelab-tamtam-master)

@@ -117,7 +117,7 @@ You can bind this script to TamTam using the following command:
 
 TamTam can be configured using a configuration file, environment variables or command line. Note that command line takes precedence over the environment variables which in their turn take precedence over the values from the configuration file.
 
-The default location for the configuration file is `$HOME/.tamtam.yml` but you can also specify the location via the command line option `--config`. Currently only a few global option can be configured using the environment or configuration file.
+The default location for the configuration file is `$HOME/.tamtam.yml` but you can also specify the location via the command line option `--config`. Currently only a few global options can be configured using the environment or configuration file.
 
 Example of the configuration file:
 

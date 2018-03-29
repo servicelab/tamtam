@@ -162,7 +162,7 @@ After that you are ready to build, some examples:
 ```bash
 ./dist.sh # builds TamTam for your current architecture
 ./dist.sh linux arm # builds TamTam for ARM based Linux distributions
-./dist.sh freebsd 386 # builds TamTam fro i386 based FreeBSD
+./dist.sh freebsd 386 # builds TamTam for i386 based FreeBSD
 ...
 ```
 

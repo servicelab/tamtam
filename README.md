@@ -111,7 +111,7 @@ You can bind this script to TamTam using the following command:
 
 ### Demo
 
-[![asciicast](https://asciinema.org/a/WQfWzo3I02DP8ChQuNrRpJOpm.png)](https://asciinema.org/a/WQfWzo3I02DP8ChQuNrRpJOpm)
+[![asciicast](https://asciinema.org/a/1XiYR17W8MZsEI0IUM0oBZWJO.png)](https://asciinema.org/a/1XiYR17W8MZsEI0IUM0oBZWJO?speed=2&theme=solarized-dark)
 
 ## Configuration
 

@@ -109,6 +109,10 @@ You can bind this script to TamTam using the following command:
 ./tamtam stream | ./handler.sh
 ```
 
+### Demo
+
+[![asciicast](https://asciinema.org/a/WQfWzo3I02DP8ChQuNrRpJOpm.png)](https://asciinema.org/a/WQfWzo3I02DP8ChQuNrRpJOpm)
+
 ## Configuration
 
 TamTam can be configured using a configuration file, environment variables or command line. Note that command line takes precedence over the environment variables which in their turn take precedence over the values from the configuration file.

@@ -6,13 +6,13 @@ import:
 - package: github.com/CrowdSurge/banner
 - package: github.com/spf13/cobra
 - package: github.com/spf13/viper
-  version: ~1.0.0
+  version: ~1.0.2
 - package: github.com/clockworksoul/smudge
 - package: golang.org/x/net
   subpackages:
   - context
 - package: google.golang.org/grpc
-  version: ^1.11.0
+  version: ^1.11.1
   subpackages:
   - reflection
 - package: github.com/cpuguy83/go-md2man

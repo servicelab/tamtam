@@ -1,5 +1,5 @@
-hash: 5bf05e2c60237b207e2da0d7becc73bccd388dace5b9cf9715a99ba0665dccd1
-updated: 2018-03-28T13:04:38.625882+02:00
+hash: 754b3303c547ba890b38b091b93518c45a3e08c4553666bec88b5d40fe1b3dd8
+updated: 2018-04-04T16:29:01.579799+02:00
 imports:
 - name: github.com/clockworksoul/smudge
   version: 91734ad0bbc63d5f9a5085989c927b5532cad1dc
@@ -86,7 +86,7 @@ imports:
   subpackages:
   - googleapis/rpc/status
 - name: google.golang.org/grpc
-  version: afc05b9e1d36f289ea16ba294894486a3e458246
+  version: 1e2570b1b19ade82d8dbb31bba4e65e9f9ef5b34
   subpackages:
   - balancer
   - balancer/base

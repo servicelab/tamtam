@@ -70,21 +70,19 @@ func initConfig() {
 // RootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "tamtam",
-	Short: "Gossip network",
-	Long:  `Gossip network agent and RPC interface to interact with the network.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//Run: func(cmd *cobra.Command, args []string) {
-	//},
+	Short: "TamTam manages a gossip network",
+	Long:  `TamTam manages a gossip network agent and uses an RPC interface to interact with the network.`,
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		if !viper.GetBool("nobanner") {
+			fmt.Fprintln(os.Stderr, banner.PrintS("tamtam"))
+		}
+
+	},
 }
 
 // Execute adds all child commands to the root command sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	if !viper.GetBool("nobanner") {
-		fmt.Fprintln(os.Stderr, banner.PrintS("tamtam"))
-	}
-
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}

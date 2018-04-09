@@ -18,13 +18,13 @@ package cmd
 
 import (
 	"errors"
-	"log"
 	"net"
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/clockworksoul/smudge"
+	"github.com/rs/zerolog/log"
 	tt "github.com/servicelab/tamtam/service"
 	util "github.com/servicelab/tamtam/util"
 	"github.com/spf13/cobra"
@@ -48,7 +48,7 @@ func (s *server) Join(ctx context.Context, in *tt.NodeAddress) (*tt.Response, er
 	if err == nil {
 		node, err = smudge.AddNode(node)
 		if err == nil {
-			log.Printf("Added node: %s\n", node.Address())
+			log.Info().Msgf("Added node: %s", node.Address())
 			return &tt.Response{Code: tt.Response_OK}, nil
 		}
 	}
@@ -61,7 +61,7 @@ func (s *server) Leave(ctx context.Context, in *tt.NodeAddress) (*tt.Response, e
 	if err == nil {
 		node, err = smudge.RemoveNode(node)
 		if err == nil {
-			log.Printf("Removed node: %s\n", node.Address())
+			log.Info().Msgf("Removed node: %s", node.Address())
 			return &tt.Response{Code: tt.Response_OK}, nil
 		}
 	}
@@ -75,7 +75,7 @@ func (s *server) Broadcast(ctx context.Context, in *tt.Message) (*tt.Response, e
 	if err != nil {
 		return &tt.Response{Code: tt.Response_ERROR}, err
 	}
-	log.Printf("Send broadcast to the network\n")
+	log.Info().Msg("Send broadcast to the network")
 	return &tt.Response{Code: tt.Response_OK}, nil
 }
 
@@ -86,7 +86,7 @@ func (s *server) Stream(in *tt.Empty, stream tt.TamTam_StreamServer) error {
 	ctx := stream.Context()
 	util.AddBroadcastChannel(ctx, ch)
 	defer util.RemoveBroadcastChannel(ctx)
-	defer log.Printf("Broadcast listener went away\n")
+	defer log.Info().Msg("Broadcast listener went away")
 	for {
 		select {
 		case v := <-ch:
@@ -105,7 +105,7 @@ func (s *server) Monitor(in *tt.Empty, stream tt.TamTam_MonitorServer) error {
 	ctx := stream.Context()
 	util.AddMonitorChannel(ctx, ch)
 	defer util.RemoveMonitorChannel(ctx)
-	defer log.Printf("Monitor listener went away\n")
+	defer log.Info().Msg("Monitor listener went away")
 	for {
 		select {
 		case v := <-ch:
@@ -147,7 +147,7 @@ func (s *server) SetHeartbeat(ctx context.Context, in *tt.Heartbeat) (*tt.Respon
 		return &tt.Response{Code: tt.Response_ERROR}, errors.New("heartbeat should be between 10 and 1000")
 	}
 	smudge.SetHeartbeatMillis(int(in.Millis))
-	log.Printf("Heartbeat has been changed to %d\n", in.Millis)
+	log.Info().Msgf("Heartbeat has been changed to %d", in.Millis)
 	return &tt.Response{Code: tt.Response_OK}, nil
 }
 
@@ -209,20 +209,21 @@ and listens to RPC command on the RCP interface.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		lis, err := net.Listen("tcp", viper.GetString("rpc"))
 		if err != nil {
-			log.Fatalf("error starting the rpc server, failed to listen: %v", err)
+			log.Fatal().Msgf("error starting the rpc server, failed to listen: %v", err)
 		}
 		s := grpc.NewServer()
 		tt.RegisterTamTamServer(s, &server{})
 		reflection.Register(s)
 		go func() {
 			if err := s.Serve(lis); err != nil {
-				log.Fatalf("Failed to start the rpc server: %v", err)
+				log.Fatal().Msgf("Failed to start the rpc server: %v", err)
 			}
 		}()
 
 		// configure smudge
 		ip := net.ParseIP(bind)
 		smudge.SetListenIP(ip)
+		smudge.SetLogger(util.SmudgeLogger{})
 		smudge.SetLogThreshold(smudge.LogWarn)
 		if viper.GetBool("verbose") {
 			smudge.SetLogThreshold(smudge.LogDebug)
@@ -240,19 +241,19 @@ and listens to RPC command on the RCP interface.`,
 		smudge.SetClusterName("tamtam")
 
 		go func() {
-			log.Printf("Listening for gRPC at %s\n", viper.GetString("rpc"))
+			log.Info().Msgf("Listening for gRPC at %s", viper.GetString("rpc"))
 			if ip.To4() != nil {
-				log.Printf("Listening for gossip at %s:%d\n", bind, port)
+				log.Info().Msgf("Listening for gossip at %s:%d", bind, port)
 			} else {
-				log.Printf("Listening for gossip at [%s]:%d\n", bind, port)
+				log.Info().Msgf("Listening for gossip at [%s]:%d", bind, port)
 			}
-			log.Println("Running agent, press CRTL-C to abort...")
+			log.Info().Msg("Running agent, press CRTL-C to abort...")
 			smudge.Begin()
 		}()
 		// Handle SIGINT and SIGTERM.
 		quit := make(chan os.Signal, 2)
 		signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-		log.Println(<-quit)
+		<-quit
 	},
 }
 

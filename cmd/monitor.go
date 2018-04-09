@@ -19,10 +19,10 @@ package cmd
 import (
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"text/tabwriter"
 
+	"github.com/rs/zerolog/log"
 	tt "github.com/servicelab/tamtam/service"
 	"github.com/servicelab/tamtam/util"
 	"github.com/spf13/cobra"
@@ -44,13 +44,13 @@ var monitorCmd = &cobra.Command{
 
 		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
-			log.Fatalf("did not connect to RPC server: %v", err)
+			log.Fatal().Msgf("did not connect to RPC server: %v", err)
 		}
 		defer conn.Close()
 		c := tt.NewTamTamClient(conn)
 		stream, err := c.Monitor(context.Background(), &tt.Empty{})
 		if err != nil {
-			log.Fatalf("%v.Stream(_) = _, %v", c, err)
+			log.Fatal().Msgf("%v.Stream(_) = _, %v", c, err)
 		}
 
 		waitc := make(chan struct{})
@@ -63,7 +63,7 @@ var monitorCmd = &cobra.Command{
 					return
 				}
 				if err != nil {
-					log.Fatalf("Failed to receive a broadcast: %v", err)
+					log.Fatal().Msgf("Failed to receive a broadcast: %v", err)
 				}
 				fmt.Fprintf(w, "[%s]:%d \t%d\t%d\t%d\t%s\t\n", in.Address.IP,
 					in.Address.Port, in.Age, in.EmitCounter, in.PingMillis,

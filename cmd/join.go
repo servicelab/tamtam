@@ -18,10 +18,10 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"net"
 	"strconv"
 
+	"github.com/rs/zerolog/log"
 	tt "github.com/servicelab/tamtam/service"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -42,7 +42,7 @@ be either a IPv4 or IPv6 address with a port. For example:
 	Run: func(cmd *cobra.Command, args []string) {
 		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
-			log.Fatalf("did not connect to RPC server: %v", err)
+			log.Fatal().Msgf("did not connect to RPC server: %v", err)
 		}
 		defer conn.Close()
 		c := tt.NewTamTamClient(conn)
@@ -51,13 +51,13 @@ be either a IPv4 or IPv6 address with a port. For example:
 			port, err = strconv.Atoi(p)
 		}
 		if err != nil {
-			log.Fatal("Should not happen")
+			log.Fatal().Msg("Should not happen")
 		}
 
 		// Add the host
 		_, err = c.Join(context.Background(), &tt.NodeAddress{IP: host, Port: uint32(port)})
 		if err != nil {
-			log.Fatalf("could not join the host: %v", err)
+			log.Fatal().Msgf("could not join the host: %v", err)
 		}
 		fmt.Printf("Host was joined.\n")
 	},

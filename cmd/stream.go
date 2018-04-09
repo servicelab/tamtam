@@ -22,9 +22,9 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"os"
 
+	"github.com/rs/zerolog/log"
 	tt "github.com/servicelab/tamtam/service"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -60,13 +60,13 @@ encodings are valid:
 		var stdout bufio.Writer
 		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
-			log.Fatalf("did not connect to RPC server: %v", err)
+			log.Fatal().Msgf("did not connect to RPC server: %v", err)
 		}
 		defer conn.Close()
 		c := tt.NewTamTamClient(conn)
 		stream, err := c.Stream(context.Background(), &tt.Empty{})
 		if err != nil {
-			log.Fatalf("%v.Stream(_) = _, %v", c, err)
+			log.Fatal().Msgf("%v.Stream(_) = _, %v", c, err)
 		}
 
 		waitc := make(chan struct{})
@@ -84,7 +84,7 @@ encodings are valid:
 					return
 				}
 				if err != nil {
-					log.Fatalf("Failed to receive a broadcast: %v", err)
+					log.Fatal().Msgf("Failed to receive a broadcast: %v", err)
 				}
 				switch encoding {
 				case "string":

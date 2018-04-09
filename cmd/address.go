@@ -18,8 +18,8 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 
+	"github.com/rs/zerolog/log"
 	tt "github.com/servicelab/tamtam/service"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -35,13 +35,13 @@ var addressCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
-			log.Fatalf("did not connect to RPC server: %v", err)
+			log.Fatal().Msgf("did not connect to RPC server: %v", err)
 		}
 		defer conn.Close()
 		c := tt.NewTamTamClient(conn)
 		address, err := c.LocalAddress(context.Background(), &tt.Empty{})
 		if err != nil {
-			log.Fatalf("could get the address of the agent: %v", err)
+			log.Fatal().Msgf("could get the address of the agent: %v", err)
 		}
 		fmt.Printf("The local address of the agent is: [%s]:%d\n", address.IP, address.Port)
 	},

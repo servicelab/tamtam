@@ -19,8 +19,8 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"log"
 
+	"github.com/rs/zerolog/log"
 	tt "github.com/servicelab/tamtam/service"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -63,7 +63,7 @@ one of the following values:
 		fmt.Println("threshold called: " + args[0])
 		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
-			log.Fatalf("did not connect to RPC server: %v", err)
+			log.Fatal().Msgf("did not connect to RPC server: %v", err)
 		}
 		defer conn.Close()
 		c := tt.NewTamTamClient(conn)
@@ -87,13 +87,13 @@ one of the following values:
 		case "off":
 			l = tt.LogLevel_OFF
 		default:
-			log.Fatalf("Unexpected log level: %s\n", args[0])
+			log.Fatal().Msgf("Unexpected log level: %s\n", args[0])
 		}
 
 		// Set the new heartbeat on the server
 		_, err = c.SetLogThreshold(context.Background(), &tt.LogLevel{Level: l})
 		if err != nil {
-			log.Fatalf("could not set the new log threshold: %v", err)
+			log.Fatal().Msgf("could not set the new log threshold: %v", err)
 		}
 		fmt.Printf("Set the log treshold of the agent to %s\n", args[0])
 	},

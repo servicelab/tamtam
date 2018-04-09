@@ -19,9 +19,9 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"log"
 	"strconv"
 
+	"github.com/rs/zerolog/log"
 	tt "github.com/servicelab/tamtam/service"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -48,7 +48,7 @@ var heartbeatCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
-			log.Fatalf("did not connect to RPC server: %v", err)
+			log.Fatal().Msgf("did not connect to RPC server: %v", err)
 		}
 		defer conn.Close()
 		c := tt.NewTamTamClient(conn)
@@ -57,7 +57,7 @@ var heartbeatCmd = &cobra.Command{
 		// Set the new heartbeat on the server
 		_, err = c.SetHeartbeat(context.Background(), &tt.Heartbeat{Millis: int32(millis)})
 		if err != nil {
-			log.Fatalf("could not set the new heartbeat: %v", err)
+			log.Fatal().Msgf("could not set the new heartbeat: %v", err)
 		}
 		fmt.Printf("Set the heartbeat of the agent to %d milliseconds\n", millis)
 	},

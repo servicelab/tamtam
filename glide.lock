@@ -1,5 +1,5 @@
-hash: 754b3303c547ba890b38b091b93518c45a3e08c4553666bec88b5d40fe1b3dd8
-updated: 2018-04-09T08:42:07.033428+02:00
+hash: c2b13c081892c66a7433d1e5e26466ce36993a339d52fb73f21c784cbe5fc12e
+updated: 2018-04-09T09:09:58.098421+02:00
 imports:
 - name: github.com/clockworksoul/smudge
   version: bab8c7df1bb711c44d1e22b999f1ad4fd695ca54
@@ -42,6 +42,12 @@ imports:
   version: 00c29f56e2386353d58c599509e8dc3801b0d716
 - name: github.com/pelletier/go-toml
   version: 05bcc0fb0d3e60da4b8dd5bd7e0ea563eb4ca943
+- name: github.com/rs/zerolog
+  version: 05eafee0eb17d0150591a8f30f0fa592cc9b7471
+  subpackages:
+  - internal/cbor
+  - internal/json
+  - log
 - name: github.com/russross/blackfriday
   version: 55d61fa8aa702f59229e6cff85793c22e580eaf5
 - name: github.com/spf13/afero

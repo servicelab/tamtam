@@ -18,10 +18,10 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"text/tabwriter"
 
+	"github.com/rs/zerolog/log"
 	tt "github.com/servicelab/tamtam/service"
 	"github.com/servicelab/tamtam/util"
 	"github.com/spf13/cobra"
@@ -38,7 +38,7 @@ var nodesCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
-			log.Fatalf("did not connect to RPC server: %v", err)
+			log.Fatal().Msgf("did not connect to RPC server: %v", err)
 		}
 		defer conn.Close()
 		c := tt.NewTamTamClient(conn)
@@ -46,7 +46,7 @@ var nodesCmd = &cobra.Command{
 		// Send message
 		nl, err := c.Nodes(context.Background(), &tt.Empty{})
 		if err != nil {
-			log.Fatalf("could not get node list: %v", err)
+			log.Fatal().Msgf("could not get node list: %v", err)
 		}
 		w := new(tabwriter.Writer)
 		// Format in tab-separated columns with a tab stop of 8.

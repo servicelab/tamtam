@@ -19,3 +19,7 @@ import:
   version: ~1.0.8
   subpackages:
   - md2man
+- package: github.com/rs/zerolog
+  version: ~1.6.0
+  subpackages:
+  - log

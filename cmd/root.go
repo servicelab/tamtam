@@ -18,6 +18,8 @@ package cmd
 
 import (
 	"github.com/CrowdSurge/banner"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -63,7 +65,7 @@ func initConfig() {
 	}
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		log.Info().Msgf("Using config file: %s", viper.ConfigFileUsed())
 	}
 }
 
@@ -76,7 +78,12 @@ var rootCmd = &cobra.Command{
 		if !viper.GetBool("nobanner") {
 			fmt.Fprintln(os.Stderr, banner.PrintS("tamtam"))
 		}
-
+		zerolog.SetGlobalLevel(zerolog.InfoLevel)
+		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+		if viper.GetBool("verbose") {
+			log.Info().Msg("setting debug logging")
+			zerolog.SetGlobalLevel(zerolog.DebugLevel)
+		}
 	},
 }
 

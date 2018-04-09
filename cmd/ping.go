@@ -19,10 +19,10 @@ package cmd
 import (
 	"errors"
 	"fmt"
-	"log"
 	"net"
 	"strconv"
 
+	"github.com/rs/zerolog/log"
 	tt "github.com/servicelab/tamtam/service"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -53,21 +53,21 @@ be either a IPv4 or IPv6 address with a port. For example:
 	Run: func(cmd *cobra.Command, args []string) {
 		ip, ps, err := net.SplitHostPort(args[0])
 		if err != nil {
-			log.Fatalf("should not happen: %v", err)
+			log.Fatal().Msgf("should not happen: %v", err)
 		}
 		port, err := strconv.Atoi(ps)
 		if err != nil {
-			log.Fatalf("should not happen: %v", err)
+			log.Fatal().Msgf("should not happen: %v", err)
 		}
 		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
-			log.Fatalf("did not connect to RPC server: %v", err)
+			log.Fatal().Msgf("did not connect to RPC server: %v", err)
 		}
 		defer conn.Close()
 		c := tt.NewTamTamClient(conn)
 		_, err = c.Ping(context.Background(), &tt.NodeAddress{IP: ip, Port: uint32(port)})
 		if err != nil {
-			log.Fatalf("could not ping the node: %v", err)
+			log.Fatal().Msgf("could not ping the node: %v", err)
 		}
 		fmt.Printf("Send a ping message to node %s\n", args[0])
 	},

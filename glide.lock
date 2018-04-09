@@ -1,8 +1,8 @@
 hash: 754b3303c547ba890b38b091b93518c45a3e08c4553666bec88b5d40fe1b3dd8
-updated: 2018-04-04T16:29:01.579799+02:00
+updated: 2018-04-09T08:42:07.033428+02:00
 imports:
 - name: github.com/clockworksoul/smudge
-  version: 91734ad0bbc63d5f9a5085989c927b5532cad1dc
+  version: bab8c7df1bb711c44d1e22b999f1ad4fd695ca54
 - name: github.com/cpuguy83/go-md2man
   version: 20f5889cbdc3c73dbd2862796665e7c465ade7d1
   subpackages:
@@ -86,7 +86,7 @@ imports:
   subpackages:
   - googleapis/rpc/status
 - name: google.golang.org/grpc
-  version: 1e2570b1b19ade82d8dbb31bba4e65e9f9ef5b34
+  version: d89cded64628466c4ab532d1f0ba5c220459ebe8
   subpackages:
   - balancer
   - balancer/base

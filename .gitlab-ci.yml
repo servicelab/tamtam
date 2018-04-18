@@ -16,8 +16,7 @@ install:
   image: golang:1.10
   script:
     - curl https://glide.sh/get | sh
-    - rm -rf vendor
-    - glide update
+    - glide install
   artifacts:
     paths:
       - vendor

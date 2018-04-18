@@ -18,6 +18,8 @@ package util
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/clockworksoul/smudge"
 	"github.com/rs/zerolog/log"
 )
@@ -28,7 +30,7 @@ type SmudgeLogger struct {
 
 // Log writes a log message of a certain level to the logger
 func (s SmudgeLogger) Log(level smudge.LogLevel, a ...interface{}) (n int, err error) {
-	str := fmt.Sprint(a...)
+	str := strings.TrimSuffix(fmt.Sprintln(a...), "\n")
 	switch level {
 	case smudge.LogFatal:
 		log.Fatal().Msg(str)

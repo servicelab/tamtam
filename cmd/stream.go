@@ -57,7 +57,6 @@ encodings are valid:
 		return errors.New("invalid value for encoding")
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		var stdout bufio.Writer
 		conn, err := grpc.Dial(viper.GetString("rpc"), grpc.WithInsecure())
 		if err != nil {
 			log.Fatal().Msgf("did not connect to RPC server: %v", err)
@@ -70,12 +69,12 @@ encodings are valid:
 		}
 
 		waitc := make(chan struct{})
-		if encoding == "bytes" {
-			stdout := bufio.NewWriter(os.Stdout)
-			defer stdout.Flush()
-		}
 
 		go func() {
+			var stdout *bufio.Writer
+			if encoding == "bytes" {
+				stdout = bufio.NewWriter(os.Stdout)
+			}
 			for {
 				in, err := stream.Recv()
 				if err == io.EOF {
@@ -83,6 +82,7 @@ encodings are valid:
 					close(waitc)
 					return
 				}
+				log.Debug().Msgf("Received %d bytes from stream", len(in.Bytes))
 				if err != nil {
 					log.Fatal().Msgf("Failed to receive a broadcast: %v", err)
 				}
@@ -93,6 +93,7 @@ encodings are valid:
 					fmt.Printf("%s\n", b64.StdEncoding.EncodeToString(in.Bytes))
 				case "bytes":
 					stdout.Write(in.Bytes)
+					stdout.Flush()
 				}
 			}
 		}()

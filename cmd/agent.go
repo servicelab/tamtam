@@ -35,9 +35,14 @@ import (
 )
 
 var (
-	bind string
-	port int
-	hbm  int
+	bind              string
+	port              int
+	hbm               int
+	multicast         bool
+	multicastAddress  string
+	multicastPort     int
+	multicastInterval int
+	clusterName       string
 )
 
 type server struct{}
@@ -90,6 +95,7 @@ func (s *server) Stream(in *tt.Empty, stream tt.TamTam_StreamServer) error {
 	for {
 		select {
 		case v := <-ch:
+			log.Debug().Msgf("Streaming %d bytes to subscriber", len(v))
 			if err := stream.Send(&tt.Message{Bytes: v}); err != nil {
 				return err
 			}
@@ -237,8 +243,14 @@ and listens to RPC command on the RCP interface.`,
 		if ip.To4() == nil {
 			smudge.SetMaxBroadcastBytes(512)
 		}
-		smudge.SetMulticastEnabled(false)
-		smudge.SetClusterName("tamtam")
+		smudge.SetMulticastEnabled(multicast)
+		smudge.SetMulticastPort(multicastPort)
+		log.Debug().Msgf("multicast interval = %d", multicastInterval)
+		smudge.SetMulticastAnnounceIntervalSeconds(multicastInterval)
+		if multicastAddress != "" {
+			smudge.SetMulticastAddress(multicastAddress)
+		}
+		smudge.SetClusterName(clusterName)
 
 		go func() {
 			log.Info().Msgf("Listening for gRPC at %s", viper.GetString("rpc"))
@@ -262,4 +274,9 @@ func init() {
 	agentCmd.Flags().IntVarP(&port, "port", "p", smudge.GetListenPort(), "list port for the gossip network")
 	agentCmd.Flags().StringVarP(&bind, "bind", "b", "127.0.0.1", "listen address for the gossip network")
 	agentCmd.Flags().IntVar(&hbm, "heartbeat", smudge.GetHeartbeatMillis(), "heartbeat used within the gossip network")
+	agentCmd.Flags().BoolVar(&multicast, "multicast", false, "enable multicast node discovery")
+	agentCmd.Flags().StringVar(&clusterName, "clustername", "tamtam", "name for the multicast cluster")
+	agentCmd.Flags().StringVar(&multicastAddress, "multicast-address", "", "address for multicast discovery messages defaults to 224.0.0.0 or [ff02::1]")
+	agentCmd.Flags().IntVar(&multicastInterval, "multicast-interval", 0, "seconds between mutlicast disovery messages")
+	agentCmd.Flags().IntVar(&multicastPort, "multicast-port", 9998, "port to listen for multicast discovery messages")
 }

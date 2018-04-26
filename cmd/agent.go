@@ -35,11 +35,14 @@ import (
 )
 
 var (
-	bind        string
-	port        int
-	hbm         int
-	multicast   bool
-	clusterName string
+	bind              string
+	port              int
+	hbm               int
+	multicast         bool
+	multicastAddress  string
+	multicastPort     int
+	multicastInterval int
+	clusterName       string
 )
 
 type server struct{}
@@ -241,6 +244,12 @@ and listens to RPC command on the RCP interface.`,
 			smudge.SetMaxBroadcastBytes(512)
 		}
 		smudge.SetMulticastEnabled(multicast)
+		smudge.SetMulticastPort(multicastPort)
+		log.Debug().Msgf("multicast interval = %d", multicastInterval)
+		smudge.SetMulticastAnnounceIntervalSeconds(multicastInterval)
+		if multicastAddress != "" {
+			smudge.SetMulticastAddress(multicastAddress)
+		}
 		smudge.SetClusterName(clusterName)
 
 		go func() {
@@ -267,4 +276,7 @@ func init() {
 	agentCmd.Flags().IntVar(&hbm, "heartbeat", smudge.GetHeartbeatMillis(), "heartbeat used within the gossip network")
 	agentCmd.Flags().BoolVar(&multicast, "multicast", false, "enable multicast node discovery")
 	agentCmd.Flags().StringVar(&clusterName, "clustername", "tamtam", "name for the multicast cluster")
+	agentCmd.Flags().StringVar(&multicastAddress, "multicast-address", "", "address for multicast discovery messages defaults to 224.0.0.0 or [ff02::1]")
+	agentCmd.Flags().IntVar(&multicastInterval, "multicast-interval", 0, "seconds between mutlicast disovery messages")
+	agentCmd.Flags().IntVar(&multicastPort, "multicast-port", 9998, "port to listen for multicast discovery messages")
 }

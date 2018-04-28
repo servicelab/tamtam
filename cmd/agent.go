@@ -272,7 +272,7 @@ and listens to RPC command on the RCP interface.`,
 func init() {
 	rootCmd.AddCommand(agentCmd)
 	agentCmd.Flags().IntVarP(&port, "port", "p", smudge.GetListenPort(), "list port for the gossip network")
-	agentCmd.Flags().StringVarP(&bind, "bind", "b", "127.0.0.1", "listen address for the gossip network")
+	agentCmd.Flags().StringVarP(&bind, "bind", "b", "0.0.0.0", "listen address for the gossip network")
 	agentCmd.Flags().IntVar(&hbm, "heartbeat", smudge.GetHeartbeatMillis(), "heartbeat used within the gossip network")
 	agentCmd.Flags().BoolVar(&multicast, "multicast", false, "enable multicast node discovery")
 	agentCmd.Flags().StringVar(&clusterName, "clustername", "tamtam", "name for the multicast cluster")

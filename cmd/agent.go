@@ -43,6 +43,7 @@ var (
 	multicastPort     int
 	multicastInterval int
 	clusterName       string
+	ipv6              bool
 )
 
 type server struct{}
@@ -212,6 +213,15 @@ var agentCmd = &cobra.Command{
 	Short: "Starts a TamTam agent.",
 	Long: `Starts a TamTam agent that keeps a connection to the gossip network
 and listens to RPC command on the RCP interface.`,
+	Args: func(cmd *cobra.Command, args []string) error {
+		if ipv6 {
+			if bind != "0.0.0.0" {
+				return errors.New("--ipv6 flag can only be used with the default bind address")
+			}
+			bind = "::"
+		}
+		return nil
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		lis, err := net.Listen("tcp", viper.GetString("rpc"))
 		if err != nil {
@@ -273,6 +283,7 @@ func init() {
 	rootCmd.AddCommand(agentCmd)
 	agentCmd.Flags().IntVarP(&port, "port", "p", smudge.GetListenPort(), "list port for the gossip network")
 	agentCmd.Flags().StringVarP(&bind, "bind", "b", "0.0.0.0", "listen address for the gossip network")
+	agentCmd.Flags().BoolVarP(&ipv6, "ipv6", "6", false, "alias for -b [::], listens to all IPv6 interfaces")
 	agentCmd.Flags().IntVar(&hbm, "heartbeat", smudge.GetHeartbeatMillis(), "heartbeat used within the gossip network")
 	agentCmd.Flags().BoolVar(&multicast, "multicast", false, "enable multicast node discovery")
 	agentCmd.Flags().StringVar(&clusterName, "clustername", "tamtam", "name for the multicast cluster")

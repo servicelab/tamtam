@@ -15,8 +15,8 @@ install:
   stage: install
   image: golang:1.10
   script:
-    - curl https://glide.sh/get | sh
-    - glide install
+    - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+    - dep ensure
   artifacts:
     paths:
       - vendor

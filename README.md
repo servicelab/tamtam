@@ -152,9 +152,9 @@ Otherwise, you can setup the build environment by executing the following script
 cd $GOPATH
 git clone https://github.com/servicelab/tamtam src/github.com/servicelab/tamtam
 cd src/github.com/servicelab/tamtam
-# install glide
-curl https://glide.sh/get | sh
-glide install
+# install dep
+curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+dep ensure
 ```
 
 After that you are ready to build, some examples:

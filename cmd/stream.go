@@ -82,10 +82,10 @@ encodings are valid:
 					close(waitc)
 					return
 				}
-				log.Debug().Msgf("Received %d bytes from stream", len(in.Bytes))
 				if err != nil {
 					log.Fatal().Msgf("Failed to receive a broadcast: %v", err)
 				}
+				log.Debug().Msgf("Received %d bytes from stream", len(in.Bytes))
 				switch encoding {
 				case "string":
 					fmt.Printf("%s\n", string(in.Bytes))

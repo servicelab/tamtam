@@ -220,6 +220,9 @@ and listens to RPC command on the RCP interface.`,
 			}
 			bind = "::"
 		}
+		if multicast && bind == "0.0.0.0" {
+			return errors.New("multicast required TamTam to be bound to a specific IP address")
+		}
 		return nil
 	},
 	Run: func(cmd *cobra.Command, args []string) {

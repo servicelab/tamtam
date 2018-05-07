@@ -207,6 +207,27 @@ func (s *server) LocalAddress(ctx context.Context, in *tt.Empty) (*tt.NodeAddres
 	return &tt.NodeAddress{IP: ip.String(), Port: uint32(port)}, nil
 }
 
+// Get preferred outbound ip of this machine
+func getOutboundIP(ipv6 bool) (string, error) {
+	var (
+		conn net.Conn
+		err  error
+	)
+
+	if ipv6 {
+		conn, err = net.Dial("udp", "2001:4860:4860::8888")
+	} else {
+		conn, err = net.Dial("udp", "8.8.8.8:80")
+	}
+	if err != nil {
+		return "", err
+	}
+
+	defer conn.Close()
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+	return localAddr.IP.String(), nil
+}
+
 // agentCmd represents the agent command
 var agentCmd = &cobra.Command{
 	Use:   "agent",
@@ -219,9 +240,6 @@ and listens to RPC command on the RCP interface.`,
 				return errors.New("--ipv6 flag can only be used with the default bind address")
 			}
 			bind = "::"
-		}
-		if multicast && bind == "0.0.0.0" {
-			return errors.New("multicast required TamTam to be bound to a specific IP address")
 		}
 		return nil
 	},
@@ -240,6 +258,12 @@ and listens to RPC command on the RCP interface.`,
 		}()
 
 		// configure smudge
+		if bind == "0.0.0.0" {
+			bind, err = getOutboundIP(ipv6)
+			if err != nil {
+				log.Fatal().Msgf("Failed to determine bind address: %v", err)
+			}
+		}
 		ip := net.ParseIP(bind)
 		smudge.SetListenIP(ip)
 		smudge.SetLogger(util.SmudgeLogger{})

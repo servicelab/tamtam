@@ -9,7 +9,7 @@ arch = $(word 2, $(temp))
 version = `cat VERSION`
 time = `date +%FT%T%z`
 hash = `git rev-parse HEAD`
-ldflags = "-X $(package)/cmd.Version=$(version) -X $(package)/cmd.BuildTime=$(time) -X $(package)/cmd.GitHash=$(hash)"
+ldflags = "-s -w -X $(package)/cmd.Version=$(version) -X $(package)/cmd.BuildTime=$(time) -X $(package)/cmd.GitHash=$(hash)"
 
 build:
 	go build -o $(name)

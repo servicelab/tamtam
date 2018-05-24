@@ -286,8 +286,6 @@ and listens to RPC command on the RCP interface.`,
 		smudge.SetMulticastAnnounceIntervalSeconds(multicastInterval)
 		if multicastAddress != "" {
 			smudge.SetMulticastAddress(multicastAddress)
-		} else {
-			smudge.SetMulticastAddress("224.0.0.0")
 		}
 		smudge.SetClusterName(clusterName)
 

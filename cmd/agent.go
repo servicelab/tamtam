@@ -44,6 +44,7 @@ var (
 	multicastInterval int
 	clusterName       string
 	ipv6              bool
+	max               int
 )
 
 type server struct{}
@@ -277,9 +278,17 @@ and listens to RPC command on the RCP interface.`,
 		smudge.SetListenPort(port)
 		smudge.SetHeartbeatMillis(hbm)
 
-		if ip.To4() == nil {
-			smudge.SetMaxBroadcastBytes(512)
+		if max == 0 {
+			if ipv6 {
+				max = 512
+			} else {
+				max = 256
+			}
+		} else {
+			log.Info().Msgf("Setting the maximum size for a broadcast message to %d bytes", max)
 		}
+		smudge.SetMaxBroadcastBytes(max)
+
 		smudge.SetMulticastEnabled(multicast)
 		smudge.SetMulticastPort(multicastPort)
 		log.Debug().Msgf("multicast interval = %d", multicastInterval)
@@ -312,6 +321,7 @@ func init() {
 	agentCmd.Flags().StringVarP(&bind, "bind", "b", "0.0.0.0", "listen address for the gossip network")
 	agentCmd.Flags().BoolVarP(&ipv6, "ipv6", "6", false, "alias for -b [::], listens to all IPv6 interfaces")
 	agentCmd.Flags().IntVar(&hbm, "heartbeat", smudge.GetHeartbeatMillis(), "heartbeat used within the gossip network")
+	agentCmd.Flags().IntVar(&max, "max", 0, "maximum size for broadcast messages, set to 0 means 256 for IPv4 and 512 for IPv6")
 	agentCmd.Flags().BoolVar(&multicast, "multicast", false, "enable multicast node discovery")
 	agentCmd.Flags().StringVar(&clusterName, "clustername", "tamtam", "name for the multicast cluster")
 	agentCmd.Flags().StringVar(&multicastAddress, "multicast-address", "", "address for multicast discovery messages defaults to 224.0.0.0 or [ff02::1]")

@@ -154,16 +154,13 @@ git clone https://github.com/servicelab/tamtam src/github.com/servicelab/tamtam
 cd src/github.com/servicelab/tamtam
 # install dep
 curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-dep ensure
 ```
 
 After that you are ready to build, some examples:
 
 ```bash
-./dist.sh # builds TamTam for your current architecture
-./dist.sh linux arm # builds TamTam for ARM based Linux distributions
-./dist.sh freebsd 386 # builds TamTam for i386 based FreeBSD
-...
+make ensure # installs the dependencies
+make        # builds TamTam for your current architecture
 ```
 
 You will find the TamTam binary the current folder.

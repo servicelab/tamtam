@@ -1,0 +1,184 @@
+version: '2'
+
+services:
+  node000:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node001:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node002:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node003:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node004:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node005:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node006:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node007:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node008:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node009:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node010:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node011:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node012:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node013:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node014:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node015:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node016:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node017:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node018:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node019:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node020:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node021:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node022:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node023:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node024:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node025:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node026:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node027:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node028:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+
+  node029:
+    image: clockworksoul/smudge:latest
+    command: "/smudge"
+    networks:
+      - smudgeNetwork
+networks:
+  smudgeNetwork:

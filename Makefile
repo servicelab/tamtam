@@ -17,14 +17,8 @@ build:
 test:
 	go test
 
-ensure:
-	dep ensure --update
-
-ensure-test:
-	dep ensure --update
-	go test
-
-prepare: ensure-test
+docker: test
+	GOOS=linux GOARCH=amd64 go build -ldflags $(ldflags) -o 'dist/$(name)'
 
 release: $(PLATFORMS)
 
@@ -32,7 +26,7 @@ clean:
 	rm -rf dist
 	rm $(name)
 
-$(PLATFORMS): prepare
+$(PLATFORMS): test
 	GOOS=$(os) GOARCH=$(arch) go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
 
 .PHONY: build

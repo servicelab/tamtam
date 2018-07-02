@@ -152,17 +152,8 @@ Otherwise, you can setup the build environment by executing the following script
 cd $GOPATH
 git clone https://github.com/servicelab/tamtam src/github.com/servicelab/tamtam
 cd src/github.com/servicelab/tamtam
-# install dep
-curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-```
-
-After that you are ready to build, some examples:
-
-```bash
-make ensure # installs the dependencies
-make        # builds TamTam for your current architecture
+make # builds TamTam for your current architecture
 ```
 
 You will find the TamTam binary the current folder.
-
 

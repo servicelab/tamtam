@@ -13,7 +13,6 @@ build:
     - cd /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
     - export GOBIN=$GOPATH/bin
     - export PATH=$PATH:$GOPATH/bin
-    - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
     - make release -j 5
   artifacts:
     paths:

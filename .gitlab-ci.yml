@@ -18,10 +18,6 @@ build:
     paths:
       - dist
     expire_in: 30 mins
-  cache:
-    key: go-cache
-    paths:
-      - vendor
   tags:
     - docker
 

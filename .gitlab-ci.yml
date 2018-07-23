@@ -24,6 +24,8 @@ build:
 macos:
   stage: package
   image: alpine:3.7
+  variables:
+    GIT_STRATEGY: none
   script:
     - mv dist/tamtam-darwin-amd64 ./tamtam
   artifacts:
@@ -34,6 +36,8 @@ macos:
 linux-amd64:
   stage: package
   image: alpine:3.7
+  variables:
+    GIT_STRATEGY: none
   script:
     - mv dist/tamtam-linux-amd64 ./tamtam
   artifacts:
@@ -44,6 +48,8 @@ linux-amd64:
 linux-386:
   stage: package
   image: alpine:3.7
+  variables:
+    GIT_STRATEGY: none
   script:
     - mv dist/tamtam-linux-386 ./tamtam
   artifacts:
@@ -54,6 +60,8 @@ linux-386:
 linux-arm:
   stage: package
   image: alpine:3.7
+  variables:
+    GIT_STRATEGY: none
   script:
     - mv dist/tamtam-linux-arm ./tamtam
   artifacts:
@@ -64,6 +72,8 @@ linux-arm:
 windows:
   stage: package
   image: alpine:3.7
+  variables:
+    GIT_STRATEGY: none
   script:
     - mv dist/tamtam-windows-amd64 ./tamtam.exe
   artifacts:

@@ -1,12 +1,15 @@
 stages:
   - build
   - package
+  - docker
+
+before_script:
+  - export SERVER_NAMESPACE=github.com/servicelab
 
 build:
   stage: build
   image: golang:1.10
   script:
-    - export SERVER_NAMESPACE=github.com/servicelab
     - mkdir -p /go/src/$SERVER_NAMESPACE
     - export GOPATH=/go
     - ln -s $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
@@ -20,6 +23,14 @@ build:
     expire_in: 30 mins
   tags:
     - docker
+
+docker:
+  stage: docker
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t $CI_PROJECT_NAME:latest .
 
 macos:
   stage: package

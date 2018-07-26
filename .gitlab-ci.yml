@@ -27,10 +27,13 @@ build:
 docker:
   stage: docker
   image: docker:latest
+  only:
+    - tags
+    - triggers
   services:
     - docker:dind
   script:
-    - docker build -t $CI_PROJECT_NAME:latest .
+    - make images
 
 macos:
   stage: package

@@ -26,16 +26,16 @@ build:
 
 docker:
   stage: docker
-  image: docker:latest
+  image: golang:1.10
   only:
     - tags
     - triggers
   services:
     - docker:dind
   script:
-    - make images
     - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-darwin-amd64 -O manifest-tool
     - chmod u+x manifest-tool
+    - make images
     - ./manifest-tool push from-spec tamtam-image.yaml
 
 macos:

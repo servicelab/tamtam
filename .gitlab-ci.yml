@@ -26,7 +26,7 @@ build:
 
 docker:
   stage: docker
-  image: golang:1.10
+  image: servicelaborg/docker:latest
   only:
     - tags
     - triggers

@@ -25,12 +25,8 @@ test:
 	go test
 
 docker:
-	docker build \
-		--build-arg PACKAGE=$(package) \
-		--build-arg VERSION=$(major).$(minor).$(patch) \
-		--build-arg TIME=$(time) \
-		--build-arg HASH=$(hash) \
-		-t $(image) .
+	GOOS=linux GOARCH=amd64 go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
+	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image) .
 
 images: $(DOCKER)
 
@@ -48,14 +44,9 @@ login:
 		docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD); \
 	fi
 
-$(DOCKER): login
+$(DOCKER): $(PLATFORMS) login
 	# build
-	docker build --build-arg GOOS=$(os)\
-		--build-arg GOARCH=$(arch)\
-		--build-arg VERSION=$(major).$(minor).$(patch)\
-		--build-arg TIME=$(time)\
-		--build-arg HASH=$HASH\
-		-t $(image)/$(os)/$(arch) .
+	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image)/$(os)/$(arch) .
 
 	# tag
 	docker tag $(image)/$(os)/$(arch) $(image)/$(os)/$(arch):$(major)

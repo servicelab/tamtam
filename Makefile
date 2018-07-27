@@ -2,18 +2,23 @@ name = tamtam
 namespace = servicelaborg
 package = github.com/servicelab/tamtam
 image = $(namespace)/$(name)
-latest = :latest
+
 # make $(latest) empty when on a maintenance branch
+latest = :latest
+
 major = 1
 minor = 0
 patch = 0
 
-PLATFORMS = darwin/amd64/p linux/amd64/p linux/arm/p linux/arm64/p linux/386/p windows/amd64/p
-DOCKER = linux/amd64/d linux/arm/d linux/arm64/d linux/386/d
+# Targets for [b]uilding binaries for various platforms
+PLATFORMS = b/darwin/amd64 b/linux/amd64 b/linux/arm b/linux/arm64 b/linux/386 b/windows/amd64
+
+# Targets for [d]ockerizing containers for various platforms
+DOCKER = d/linux/amd64 d/linux/arm d/linux/arm64 d/linux/386
 
 temp = $(subst /, ,$@)
-os = $(word 1, $(temp))
-arch = $(word 2, $(temp))
+os = $(word 2, $(temp))
+arch = $(word 3, $(temp))
 
 time = `date +%FT%T%z`
 hash = `git rev-parse HEAD`

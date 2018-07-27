@@ -14,10 +14,12 @@ manifests:
   -
     image: docker.io/servicelaborg/tamtam:1-linux-arm
     platform:
-      architecture: arm/v7
+      architecture: arm
+      variant: v7
       os: linux
   -
     image: docker.io/servicelaborg/tamtam:1-linux-arm64
     platform:
-      architecture: arm64/v8
+      architecture: arm64
+      variant: v8
       os: linux

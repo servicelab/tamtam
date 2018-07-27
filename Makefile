@@ -44,7 +44,7 @@ login:
 		docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD); \
 	fi
 
-$(DOCKER): $(PLATFORMS) login
+$(DOCKER): login
 	# build
 	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image)/$(os)/$(arch) .
 

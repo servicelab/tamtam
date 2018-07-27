@@ -41,7 +41,7 @@ $(PLATFORMS): test
 
 login:
 	@if [ "$(DOCKER_USER)" != "" ]; then \
-		docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD); \
+		docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD) ; \
 	fi
 
 $(DOCKER): login
@@ -56,10 +56,10 @@ $(DOCKER): login
 
 	# push if user is set
 	@if [ "$(DOCKER_USER)" != "" ]; then \
-		docker push $(image)/$(os)/$(arch) $(image)/$(os)/$(arch):$(major); \
-		docker push $(image)/$(os)/$(arch) $(image)/$(os)/$(arch):$(major).$(minor); \
-		docker push $(image)/$(os)/$(arch) $(image)/$(os)/$(arch):$(major).$(minor).$(patch); \
-		docker push $(image)/$(os)/$(arch) $(image)/$(os)/$(arch)$(latest); \
+		docker push $(image)/$(os)/$(arch):$(major) ; \
+		docker push $(image)/$(os)/$(arch):$(major).$(minor) ; \
+		docker push $(image)/$(os)/$(arch):$(major).$(minor).$(patch) ; \
+		docker push $(image)/$(os)/$(arch)$(latest) ; \
 	fi
 
 .PHONY: build

@@ -27,6 +27,8 @@ build:
 docker:
   stage: docker
   image: servicelaborg/docker:latest
+  variables:
+    GIT_STRATEGY: none
   only:
     - tags
     - triggers

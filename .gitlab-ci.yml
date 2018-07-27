@@ -98,6 +98,21 @@ linux-arm:
     paths:
       - tamtam
 
+linux-arm64:
+  stage: package
+  image: alpine:3.7
+  only:
+    - tags
+    - triggers
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - mv dist/tamtam-linux-arm64 ./tamtam
+  artifacts:
+    name: "$CI_PROJECT_NAME-v1.0.0-SNAPSHOT-$CI_JOB_NAME"
+    paths:
+      - tamtam
+
 windows:
   stage: package
   image: alpine:3.7

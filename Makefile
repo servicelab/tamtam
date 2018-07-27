@@ -8,8 +8,8 @@ major = 1
 minor = 0
 patch = 0
 
-PLATFORMS = darwin/amd64/p linux/amd64/p linux/arm/p linux/386/p windows/amd64/p
-DOCKER = linux/amd64/d linux/arm/d linux/386/d
+PLATFORMS = darwin/amd64/p linux/amd64/p linux/arm/p linux/arm64/p linux/386/p windows/amd64/p
+DOCKER = linux/amd64/d linux/arm/d linux/arm64/d linux/386/d
 
 temp = $(subst /, ,$@)
 os = $(word 1, $(temp))

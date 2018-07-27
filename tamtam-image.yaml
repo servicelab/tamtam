@@ -7,7 +7,17 @@ manifests:
       architecture: amd64
       os: linux
   -
+    image: docker.io/servicelaborg/tamtam:1-linux-386
+    platform:
+      architecture: 386
+      os: linux
+  -
     image: docker.io/servicelaborg/tamtam:1-linux-arm
     platform:
-      architecture: arm
+      architecture: arm/v7
+      os: linux
+  -
+    image: docker.io/servicelaborg/tamtam:1-linux-arm64
+    platform:
+      architecture: arm64/v8
       os: linux

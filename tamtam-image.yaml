@@ -11,9 +11,3 @@ manifests:
     platform:
       architecture: arm
       os: linux
-  -
-    image: docker.io/servicelaborg/tamtam:1-linux-i386
-    platform:
-      architecture: i386
-      os: linux
-

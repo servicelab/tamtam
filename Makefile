@@ -42,7 +42,7 @@ $(PLATFORMS): test
 
 login:
 	@if [ "$(DOCKER_USER)" != "" ]; then \
-		docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD) ; \
+		docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD) https://registry-1.docker.io/v2/ ; \
 	fi
 
 $(DOCKER): login

@@ -21,7 +21,7 @@ TamTam uses the [Smudge](https://github.com/clockworksoul/smudge) library that p
 
 ## Getting the binary
 
-Binaries are automatically being build by the CI/CD pipeline on each merge. When the build pipeline passed successfully you can download the binaries via the links below:
+Binaries are automatically being build by the CI/CD pipeline on each release. The `master` branch always has the latest release. When the build pipeline passed successfully you can download the binaries via the links below:
 
 * [MacOS amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=macos)
 * [Windows amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=windows)
@@ -30,7 +30,7 @@ Binaries are automatically being build by the CI/CD pipeline on each merge. When
 * [Linux arm32v7](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-arm)
 * [Linux arm64v8](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-arm64)
 
-Other binaries may be build from source.
+You can also build your binaries from source.
 
 ## Command line interface
 

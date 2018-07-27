@@ -2,17 +2,17 @@ image: docker.io/servicelaborg/tamtam:1.0.0
 tags: ['1', '1.0', 'latest']
 manifests:
   -
-    image: docker.io/servicelaborg/tamtam/linux/amd64
+    image: docker.io/servicelaborg/tamtam:1-linux-amd64
     platform:
       architecture: amd64
       os: linux
   -
-    image: docker.io/servicelaborg/tamtam/linux/arm
+    image: docker.io/servicelaborg/tamtam:1-linux-arm
     platform:
       architecture: arm
       os: linux
   -
-    image: docker.io/servicelaborg/tamtam/linux/i386
+    image: docker.io/servicelaborg/tamtam:1-linux-i386
     platform:
       architecture: i386
       os: linux

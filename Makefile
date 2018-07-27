@@ -2,7 +2,8 @@ name = tamtam
 namespace = servicelaborg
 package = github.com/servicelab/tamtam
 image = $(namespace)/$(name)
-latest = :latest # make empty when on a maintenance branch
+latest = :latest
+# make $(latest) empty when on a maintenance branch
 major = 1
 minor = 0
 patch = 0

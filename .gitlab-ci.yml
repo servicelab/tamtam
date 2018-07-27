@@ -33,7 +33,7 @@ docker:
   services:
     - docker:dind
   script:
-    - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-darwin-amd64 -O manifest-tool
+    - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-amd64 -O manifest-tool
     - chmod u+x manifest-tool
     - make images
     - ./manifest-tool push from-spec tamtam-image.yaml
@@ -41,6 +41,9 @@ docker:
 macos:
   stage: package
   image: alpine:3.7
+  only:
+    - tags
+    - triggers
   variables:
     GIT_STRATEGY: none
   script:
@@ -53,6 +56,9 @@ macos:
 linux-amd64:
   stage: package
   image: alpine:3.7
+  only:
+    - tags
+    - triggers
   variables:
     GIT_STRATEGY: none
   script:
@@ -65,6 +71,9 @@ linux-amd64:
 linux-386:
   stage: package
   image: alpine:3.7
+  only:
+    - tags
+    - triggers
   variables:
     GIT_STRATEGY: none
   script:
@@ -77,6 +86,9 @@ linux-386:
 linux-arm:
   stage: package
   image: alpine:3.7
+  only:
+    - tags
+    - triggers
   variables:
     GIT_STRATEGY: none
   script:
@@ -89,6 +101,9 @@ linux-arm:
 windows:
   stage: package
   image: alpine:3.7
+  only:
+    - tags
+    - triggers
   variables:
     GIT_STRATEGY: none
   script:

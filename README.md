@@ -21,15 +21,14 @@ TamTam uses the [Smudge](https://github.com/clockworksoul/smudge) library that p
 
 ## Getting the binary
 
-> Currently TamTam should be considered unstable. Use the binaries at your own risk.
-
 Binaries are automatically being build by the CI/CD pipeline on each merge. When the build pipeline passed successfully you can download the binaries via the links below:
 
 * [MacOS amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=macos)
 * [Windows amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=windows)
 * [Linux amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-amd64)
-* [Linux i386](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-i386)
-* [Linux arm](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-arm)
+* [Linux i386](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-386)
+* [Linux arm32v7](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-arm)
+* [Linux arm64v8](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-arm64)
 
 Other binaries may be build from source.
 

@@ -3,8 +3,8 @@ namespace = servicelaborg
 package = github.com/servicelab/tamtam
 image = $(namespace)/$(name)
 
-# make $(latest) empty when on a maintenance branch
-latest = :latest
+# make $(branchtag) empty when on a maintenance branch
+branchtag = :latest
 
 major = 1
 minor = 0
@@ -31,7 +31,7 @@ test:
 	go test
 
 docker:
-	GOOS=linux GOARCH=amd64 go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
 	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image) .
 
 images: $(DOCKER)
@@ -43,7 +43,7 @@ clean:
 	rm $(name)
 
 $(PLATFORMS): test
-	GOOS=$(os) GOARCH=$(arch) go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
+	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
 
 login:
 	@if [ "$(DOCKER_USER)" != "" ]; then \
@@ -52,20 +52,21 @@ login:
 
 $(DOCKER): login
 	# build
-	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image) .
+	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image)$(branchtag)-$(os)-$(arch) .
 
 	# tag
-	docker tag $(image) $(image):$(major)-$(os)-$(arch)
-	docker tag $(image) $(image):$(major).$(minor)-$(os)-$(arch)
-	docker tag $(image) $(image):$(major).$(minor).$(patch)-$(os)-$(arch)
-	docker tag $(image) $(image)$(latest)-$(os)-$(arch)
+	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(major)-$(os)-$(arch)
+	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(major).$(minor)-$(os)-$(arch)
+	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(major).$(minor).$(patch)-$(os)-$(arch)
 
 	# push if user is set
 	@if [ "$(DOCKER_USER)" != "" ]; then \
 		docker push $(image):$(major)-$(os)-$(arch) ; \
 		docker push $(image):$(major).$(minor)-$(os)-$(arch) ; \
 		docker push $(image):$(major).$(minor).$(patch)-$(os)-$(arch) ; \
-		docker push $(image)$(latest)-$(os)-$(arch) ; \
+		if ["$(branchtag)" != "" ]; then \
+			docker push $(image)$(branchtag)-$(os)-$(arch) ; \
+		fi \
 	fi
 
 .PHONY: build

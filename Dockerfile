@@ -1,4 +1,4 @@
-FROM scratch
+FROM alpine
 MAINTAINER eelco@servicelab.org
 ARG BIN=
 WORKDIR /app

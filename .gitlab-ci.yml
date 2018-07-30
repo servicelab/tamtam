@@ -36,7 +36,8 @@ docker:
     - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-amd64 -O manifest-tool
     - chmod 555 manifest-tool
     - make images -j 4
-    - ./dist/tamtam-linux-amd64 version
+    - ls -al /dist
+    - dist/tamtam-linux-amd64 version
     - docker run --rm servicelaborg/tamtam:1-linux-amd64 version
       #- ./manifest-tool push from-spec spec.yaml
 

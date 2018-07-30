@@ -3,8 +3,8 @@ namespace = servicelaborg
 package = github.com/servicelab/tamtam
 image = $(namespace)/$(name)
 
-# make $(latest) empty when on a maintenance branch
-latest = :latest
+# make $(branchtag) empty when on a maintenance branch
+branchtag = :latest
 
 major = 1
 minor = 0
@@ -52,20 +52,20 @@ login:
 
 $(DOCKER): login
 	# build
-	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image)$(latest)-$(os)-$(arch) .
+	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image)$(branchtag)-$(os)-$(arch) .
 
 	# tag
-	docker tag $(image)$(latest)-$(os)-$(arch) $(image):$(major)-$(os)-$(arch)
-	docker tag $(image)$(latest)-$(os)-$(arch) $(image):$(major).$(minor)-$(os)-$(arch)
-	docker tag $(image)$(latest)-$(os)-$(arch) $(image):$(major).$(minor).$(patch)-$(os)-$(arch)
+	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(major)-$(os)-$(arch)
+	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(major).$(minor)-$(os)-$(arch)
+	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(major).$(minor).$(patch)-$(os)-$(arch)
 
 	# push if user is set
 	@if [ "$(DOCKER_USER)" != "" ]; then \
 		docker push $(image):$(major)-$(os)-$(arch) ; \
 		docker push $(image):$(major).$(minor)-$(os)-$(arch) ; \
 		docker push $(image):$(major).$(minor).$(patch)-$(os)-$(arch) ; \
-		if ["$(latest)" != "" ]; then \
-			docker push $(image)$(latest)-$(os)-$(arch) ; \
+		if ["$(branchtag)" != "" ]; then \
+			docker push $(image)$(branchtag)-$(os)-$(arch) ; \
 		fi \
 	fi
 

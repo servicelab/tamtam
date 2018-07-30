@@ -1,7 +1,6 @@
 stages:
   - build
-  - package
-  - docker
+  - release
 
 before_script:
   - export SERVER_NAMESPACE=github.com/servicelab
@@ -25,24 +24,25 @@ build:
     - docker
 
 docker:
-  stage: docker
-  image: servicelaborg/docker:latest
+  stage: release
+  image: docker
   only:
     - tags
     - triggers
   services:
     - docker:dind
   script:
+    - ls -al dist
+    - dist/tamtam-linux-amd64 version
+    - apk add --no-cache make
     - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-amd64 -O manifest-tool
     - chmod 555 manifest-tool
     - make images -j 4
-    - ls -al /dist
-    - dist/tamtam-linux-amd64 version
     - docker run --rm servicelaborg/tamtam:1-linux-amd64 version
       #- ./manifest-tool push from-spec spec.yaml
 
 macos:
-  stage: package
+  stage: release
   image: alpine:3.7
   only:
     - tags
@@ -57,7 +57,7 @@ macos:
       - tamtam
 
 linux-amd64:
-  stage: package
+  stage: release
   image: alpine:3.7
   only:
     - tags
@@ -72,7 +72,7 @@ linux-amd64:
       - tamtam
 
 linux-386:
-  stage: package
+  stage: release
   image: alpine:3.7
   only:
     - tags
@@ -87,7 +87,7 @@ linux-386:
       - tamtam
 
 linux-arm:
-  stage: package
+  stage: release
   image: alpine:3.7
   only:
     - tags
@@ -102,7 +102,7 @@ linux-arm:
       - tamtam
 
 linux-arm64:
-  stage: package
+  stage: release
   image: alpine:3.7
   only:
     - tags
@@ -117,7 +117,7 @@ linux-arm64:
       - tamtam
 
 windows:
-  stage: package
+  stage: release
   image: alpine:3.7
   only:
     - tags

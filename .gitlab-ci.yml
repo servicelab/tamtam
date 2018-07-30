@@ -34,9 +34,10 @@ docker:
     - docker:dind
   script:
     - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-amd64 -O manifest-tool
-    - chmod u+x manifest-tool
+    - chmod 555 manifest-tool
+    - chmod 555 dist/*
     - make images
-    - ./manifest-tool push from-spec tamtam-image.yaml
+    - ./manifest-tool push from-spec spec.yaml
 
 macos:
   stage: package

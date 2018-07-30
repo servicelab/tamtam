@@ -31,7 +31,7 @@ test:
 	go test
 
 docker:
-	GOOS=linux GOARCH=amd64 go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
 	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image) .
 
 images: $(DOCKER)
@@ -43,7 +43,7 @@ clean:
 	rm $(name)
 
 $(PLATFORMS): test
-	GOOS=$(os) GOARCH=$(arch) go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
+	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
 
 login:
 	@if [ "$(DOCKER_USER)" != "" ]; then \

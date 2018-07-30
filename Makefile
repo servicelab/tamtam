@@ -52,20 +52,21 @@ login:
 
 $(DOCKER): login
 	# build
-	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image) .
+	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image)$(latest)-$(os)-$(arch) .
 
 	# tag
-	docker tag $(image) $(image):$(major)-$(os)-$(arch)
-	docker tag $(image) $(image):$(major).$(minor)-$(os)-$(arch)
-	docker tag $(image) $(image):$(major).$(minor).$(patch)-$(os)-$(arch)
-	docker tag $(image) $(image)$(latest)-$(os)-$(arch)
+	docker tag $(image)$(latest)-$(os)-$(arch) $(image):$(major)-$(os)-$(arch)
+	docker tag $(image)$(latest)-$(os)-$(arch) $(image):$(major).$(minor)-$(os)-$(arch)
+	docker tag $(image)$(latest)-$(os)-$(arch) $(image):$(major).$(minor).$(patch)-$(os)-$(arch)
 
 	# push if user is set
 	@if [ "$(DOCKER_USER)" != "" ]; then \
 		docker push $(image):$(major)-$(os)-$(arch) ; \
 		docker push $(image):$(major).$(minor)-$(os)-$(arch) ; \
 		docker push $(image):$(major).$(minor).$(patch)-$(os)-$(arch) ; \
-		docker push $(image)$(latest)-$(os)-$(arch) ; \
+		if ["$(latest)" != "" ]; then \
+			docker push $(image)$(latest)-$(os)-$(arch) ; \
+		fi \
 	fi
 
 .PHONY: build

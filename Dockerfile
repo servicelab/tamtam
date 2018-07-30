@@ -1,6 +1,6 @@
 FROM scratch
 MAINTAINER eelco@servicelab.org
-ARG BIN=tamtam
+ARG BIN=
 WORKDIR /app
 COPY $BIN /app/runner
 ENTRYPOINT ["/app/runner"]

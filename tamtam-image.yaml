@@ -1,0 +1,25 @@
+image: docker.io/servicelaborg/tamtam:1.0.0
+tags: ['1', '1.0', 'latest']
+manifests:
+  -
+    image: docker.io/servicelaborg/tamtam:1-linux-amd64
+    platform:
+      architecture: amd64
+      os: linux
+  -
+    image: docker.io/servicelaborg/tamtam:1-linux-386
+    platform:
+      architecture: 386
+      os: linux
+  -
+    image: docker.io/servicelaborg/tamtam:1-linux-arm
+    platform:
+      architecture: arm
+      variant: v7
+      os: linux
+  -
+    image: docker.io/servicelaborg/tamtam:1-linux-arm64
+    platform:
+      architecture: arm64
+      variant: v8
+      os: linux

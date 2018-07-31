@@ -21,16 +21,9 @@ TamTam uses the [Smudge](https://github.com/clockworksoul/smudge) library that p
 
 ## Getting the binary
 
-Binaries are automatically being build by the CI/CD pipeline on each release. The `master` branch always has the latest release. When the build pipeline passed successfully you can download the binaries via the links below:
+Binaries are automatically being build by the CI/CD pipeline on each release and can be downloaded from the [releases](https://github.com/servicelab/tamtam/releases). There are also cross-platform [docker images](https://hub.docker.com/r/servicelaborg/tamtam/) available.
 
-* [MacOS amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=macos)
-* [Windows amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=windows)
-* [Linux amd64](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-amd64)
-* [Linux i386](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-386)
-* [Linux arm32v7](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-arm)
-* [Linux arm64v8](https://gitlab.com/eelco/tamtam/-/jobs/artifacts/master/download?job=linux-arm64)
-
-You can also build your binaries from source.
+But you can also build your binaries from source.
 
 ## Command line interface
 

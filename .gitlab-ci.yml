@@ -37,7 +37,7 @@ release:
 
 docker:
   stage: docker
-  image: docker
+  image: docker:stable-git
   only:
     - tags
     - triggers

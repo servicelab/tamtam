@@ -29,6 +29,9 @@ builds:
     goarch: arm64
 
 archive:
+  github:
+    owner: servicelab
+    name: tamtam
   replacements:
     darwin: macos
     linux: linux

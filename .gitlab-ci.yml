@@ -12,13 +12,13 @@ before_script:
   - export GOBIN=$GOPATH/bin
   - export PATH=$PATH:$GOPATH/bin
 
-build:
-  stage: build
-  image: golang:1.10
-  script:
-    - make cross
-  tags:
-    - docker
+    #build:
+    #  stage: build
+    #  image: golang:1.10
+    #  script:
+    #    - make cross
+    #  tags:
+    #    - docker
 
 release:
   stage: release

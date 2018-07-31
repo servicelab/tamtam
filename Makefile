@@ -5,6 +5,7 @@ package = github.com/$(group)/$(name)
 # docker name space
 namespace = servicelaborg
 image = $(namespace)/$(name)
+version = `git describe --tags`
 
 # make $(branchtag) empty when on a maintenance branch
 branchtag = :dev
@@ -21,11 +22,11 @@ arch = $(word 3, $(temp))
 
 time = `date +%FT%T%z`
 hash = `git rev-parse HEAD`
-version = `git describe --tags`
-ldflags = "-s -w -X $(package)/cmd.Version=$(version) -X $(package)/cmd.BuildTime=$(time) -X $(package)/cmd.GitHash=$(hash)"
+branch = `git rev-parse --abbrev-ref HEAD`
+ldflags = "-s -w -X $(package)/cmd.Version=$(branch) -X $(package)/cmd.BuildTime=$(time) -X $(package)/cmd.GitHash=$(hash)"
 
 build:
-	go build -o $(name)
+	go build -ldflags $(ldflags) -o $(name)
 
 test:
 	go test ./...
@@ -36,27 +37,16 @@ docker:
 
 images: $(DOCKER)
 
-release: $(PLATFORMS)
+cross: $(PLATFORMS)
 
 buildall: $(PLATFORMS)
 
 clean:
 	rm -rf dist
-	rm $(name)
+	rm -f $(name)
 
 $(PLATFORMS): test
-	@mkdir -p dist/$(name)-$(os)-$(arch)
-	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)/$(name)'
-	@if [ "$(os)" == "windows" ]; then \
-		mv dist/$(name)-$(os)-$(arch)/$(name) dist/$(name)-$(os)-$(arch)/$(name).exe ; \
-	fi
-	zip -j dist/$(name)-$(version)-$(os)-$(arch).zip dist/$(name)-$(os)-$(arch)/*
-	@if [ "$(GITHUB_TOKEN)" != "" ]; then \
-		curl --data-binary @"dist/$(name)-$(version)-$(os)-$(arch).zip" \
-			-H "Authorization: token $(GITHUB_TOKEN)" \
-			-H "Content-Type: application/octet-stream" \
-			https://uploads.github.com/repos/$(group)/$(name)/releases/$(version)/assets?name=$(name)-$(version)-$(os)-$(arch).zip ; \
-	fi
+	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
 
 login:
 	@if [ "$(DOCKER_USER)" != "" ]; then \

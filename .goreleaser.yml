@@ -45,6 +45,7 @@ release:
   github:
     owner: servicelab
     name: tamtam
+  prerelease: true
 
   #dockers:
   #  - goos: linux

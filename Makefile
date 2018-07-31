@@ -8,13 +8,13 @@ image = $(namespace)/$(name)
 version = `git describe --tags`
 
 # make $(branchtag) empty when on a maintenance branch
-branchtag = :dev
+branchtag = :latest
 
 # Targets for [b]uilding binaries for various platforms
 PLATFORMS = b/darwin/amd64 b/linux/amd64 b/linux/arm b/linux/arm64 b/linux/386 b/windows/amd64
 
 # Targets for [d]ockerizing containers for various platforms
-DOCKER = d/linux/amd64 d/linux/arm d/linux/arm64 d/linux/386
+DOCKER = d/linux/amd64 d/linux/arm_6 d/linux/arm64 d/linux/386
 
 temp = $(subst /, ,$@)
 os = $(word 2, $(temp))
@@ -55,7 +55,7 @@ login:
 
 $(DOCKER): login
 	# build
-	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image)$(branchtag)-$(os)-$(arch) .
+	docker build --build-arg BIN=dist/$(os)_$(arch)/$(name) -t $(image)$(branchtag)-$(os)-$(arch) .
 
 	# tag
 	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(version)-$(os)-$(arch)

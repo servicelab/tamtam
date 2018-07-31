@@ -41,34 +41,34 @@ archive:
 checksum:
   name_template: 'checksums.txt'
 
-dockers:
-  - goos: linux
-    goarch: amd64
-    binary: tamtam
-    image: servicelaborg/tamtam
-    dockerfile: Dockerfile
-    tag_templates:
-      - "{{ .Tag }}-{{ .Os }}-{{ .Arch }}"
-
-  - goos: linux
-    goarch: arm64
-    image: servicelaborg/tamtam
-    binary: tamtam
-    dockerfile: Dockerfile
-    tag_templates:
-      - "{{ .Tag }}-{{ .Os }}-{{ .Arch }}"
-
-  - goos: linux
-    goarch: arm
-    goarm: "6"
-    image: servicelaborg/tamtam
-    binary: tamtam
-    dockerfile: Dockerfile
-    tag_templates:
-      - "{{ .Major }}-{{ .Os }}-{{ .Arch }}"
-      - "{{ .Major }}.{{ .Minor }}-{{ .Os }}-{{ .Arch }}"
-      - "{{ .Major }}.{{ .Minor }}.{{ .Patch }}-{{ .Os }}-{{ .Arch }}"
-      - "latest-{{ .Os }}-{{ .Arch }}"
+  #dockers:
+  #  - goos: linux
+  #    goarch: amd64
+  #    binary: tamtam
+  #    image: servicelaborg/tamtam
+  #    dockerfile: Dockerfile
+  #    tag_templates:
+  #      - "{{ .Tag }}-{{ .Os }}-{{ .Arch }}"
+  #
+  #  - goos: linux
+  #    goarch: arm64
+  #    image: servicelaborg/tamtam
+  #    binary: tamtam
+  #    dockerfile: Dockerfile
+  #    tag_templates:
+  #      - "{{ .Tag }}-{{ .Os }}-{{ .Arch }}"
+  #
+  #  - goos: linux
+  #    goarch: arm
+  #    goarm: "6"
+  #    image: servicelaborg/tamtam
+  #    binary: tamtam
+  #    dockerfile: Dockerfile
+  #    tag_templates:
+  #      - "{{ .Major }}-{{ .Os }}-{{ .Arch }}"
+  #      - "{{ .Major }}.{{ .Minor }}-{{ .Os }}-{{ .Arch }}"
+  #      - "{{ .Major }}.{{ .Minor }}.{{ .Patch }}-{{ .Os }}-{{ .Arch }}"
+  #      - "latest-{{ .Os }}-{{ .Arch }}"
 
 snapshot:
   name_template: "{{ .Tag }}-next"

@@ -1,5 +1,7 @@
 FROM scratch
 MAINTAINER eelco@servicelab.org
-COPY tamtam /
-ENTRYPOINT ["/tamtam"]
+ARG BIN=
+WORKDIR /app
+COPY $BIN /app/runner
+ENTRYPOINT ["/app/runner"]
 CMD ["help"]

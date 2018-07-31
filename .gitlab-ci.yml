@@ -19,6 +19,23 @@ build:
   tags:
     - docker
 
+release:
+  stage: build
+  image: golang:1.10
+  only:
+    - tags
+    - triggers
+  services:
+    - docker:dind
+  script:
+    - curl -sL https://git.io/goreleaser | bash
+  artifacts:
+    paths:
+      - /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME/dist
+    expire_in: 30 mins
+  tags:
+    - docker
+
 docker:
   stage: release
   image: docker
@@ -28,10 +45,9 @@ docker:
   services:
     - docker:dind
   script:
-    - apk add --no-cache make curl bash git go
+    - apk add --no-cache make
     - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-amd64 -O manifest-tool
     - chmod 555 manifest-tool
-    - make login
-    - curl -sL https://git.io/goreleaser | bash
+    - make images
     - ./manifest-tool push from-spec spec.yaml
 

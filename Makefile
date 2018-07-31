@@ -1,14 +1,13 @@
 name = tamtam
+group = servicelab
+package = github.com/$(group)/$(name)
+
+# docker name space
 namespace = servicelaborg
-package = github.com/servicelab/tamtam
 image = $(namespace)/$(name)
 
 # make $(branchtag) empty when on a maintenance branch
-branchtag = :latest
-
-major = 1
-minor = 0
-patch = 0
+branchtag = :dev
 
 # Targets for [b]uilding binaries for various platforms
 PLATFORMS = b/darwin/amd64 b/linux/amd64 b/linux/arm b/linux/arm64 b/linux/386 b/windows/amd64
@@ -22,13 +21,14 @@ arch = $(word 3, $(temp))
 
 time = `date +%FT%T%z`
 hash = `git rev-parse HEAD`
-ldflags = "-s -w -X $(package)/cmd.Version=$(major).$(minor).$(patch) -X $(package)/cmd.BuildTime=$(time) -X $(package)/cmd.GitHash=$(hash)"
+version = `git describe --tags`
+ldflags = "-s -w -X $(package)/cmd.Version=$(version) -X $(package)/cmd.BuildTime=$(time) -X $(package)/cmd.GitHash=$(hash)"
 
 build:
 	go build -o $(name)
 
 test:
-	go test
+	go test ./...
 
 docker:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
@@ -38,12 +38,25 @@ images: $(DOCKER)
 
 release: $(PLATFORMS)
 
+buildall: $(PLATFORMS)
+
 clean:
 	rm -rf dist
 	rm $(name)
 
 $(PLATFORMS): test
-	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)'
+	@mkdir -p dist/$(name)-$(os)-$(arch)
+	CGO_ENABLED=0 GOOS=$(os) GOARCH=$(arch) go build -ldflags $(ldflags) -o 'dist/$(name)-$(os)-$(arch)/$(name)'
+	@if [ "$(os)" == "windows" ]; then \
+		mv dist/$(name)-$(os)-$(arch)/$(name) dist/$(name)-$(os)-$(arch)/$(name).exe ; \
+	fi
+	zip -j dist/$(name)-$(version)-$(os)-$(arch).zip dist/$(name)-$(os)-$(arch)/*
+	@if [ "$(GITHUB_TOKEN)" != "" ]; then \
+		curl --data-binary @"dist/$(name)-$(version)-$(os)-$(arch).zip" \
+			-H "Authorization: token $(GITHUB_TOKEN)" \
+			-H "Content-Type: application/octet-stream" \
+			https://uploads.github.com/repos/$(group)/$(name)/releases/$(version)/assets?name=$(name)-$(version)-$(os)-$(arch).zip ; \
+	fi
 
 login:
 	@if [ "$(DOCKER_USER)" != "" ]; then \
@@ -55,15 +68,11 @@ $(DOCKER): login
 	docker build --build-arg BIN=dist/$(name)-$(os)-$(arch) -t $(image)$(branchtag)-$(os)-$(arch) .
 
 	# tag
-	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(major)-$(os)-$(arch)
-	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(major).$(minor)-$(os)-$(arch)
-	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(major).$(minor).$(patch)-$(os)-$(arch)
+	docker tag $(image)$(branchtag)-$(os)-$(arch) $(image):$(version)-$(os)-$(arch)
 
 	# push if user is set
 	@if [ "$(DOCKER_USER)" != "" ]; then \
-		docker push $(image):$(major)-$(os)-$(arch) ; \
-		docker push $(image):$(major).$(minor)-$(os)-$(arch) ; \
-		docker push $(image):$(major).$(minor).$(patch)-$(os)-$(arch) ; \
+		docker push $(image):$(version)-$(os)-$(arch) ; \
 		if ["$(branchtag)" != "" ]; then \
 			docker push $(image)$(branchtag)-$(os)-$(arch) ; \
 		fi \

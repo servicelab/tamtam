@@ -1,12 +1,13 @@
 stages:
   - build
   - release
+  - docker
 
 before_script:
   - export SERVER_NAMESPACE=github.com/servicelab
   - mkdir -p /go/src/$SERVER_NAMESPACE
   - export GOPATH=/go
-  - cp -R $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
+  - ln -s $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
   - cd /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
   - export GOBIN=$GOPATH/bin
   - export PATH=$PATH:$GOPATH/bin
@@ -20,7 +21,7 @@ build:
     - docker
 
 release:
-  stage: build
+  stage: release
   image: golang:1.10
   only:
     - tags
@@ -29,14 +30,14 @@ release:
     - curl -sL https://git.io/goreleaser | bash
   artifacts:
     paths:
-      - dist
+      - dist/
     expire_in: 30 mins
   tags:
     - docker
 
 docker:
-  stage: release
-  image: docker
+  stage: docker
+  image: docker:stable-git
   only:
     - tags
     - triggers

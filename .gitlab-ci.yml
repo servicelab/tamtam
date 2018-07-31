@@ -16,10 +16,6 @@ build:
   image: golang:1.10
   script:
     - make cross
-  artifacts:
-    paths:
-      - dist
-    expire_in: 30 mins
   tags:
     - docker
 

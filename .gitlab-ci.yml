@@ -6,7 +6,7 @@ before_script:
   - export SERVER_NAMESPACE=github.com/servicelab
   - mkdir -p /go/src/$SERVER_NAMESPACE
   - export GOPATH=/go
-  - mv $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
+  - cp -R $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
   - cd /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
   - export GOBIN=$GOPATH/bin
   - export PATH=$PATH:$GOPATH/bin

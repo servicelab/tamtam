@@ -33,10 +33,10 @@ release:
     - pwd
   artifacts:
     paths:
-      - dist/linux_386
-      - dist/linux_amd64
-      - dist/linux_arm_6
-      - dist/linux_arm64
+      - dist/linux_386/
+      - dist/linux_amd64/
+      - dist/linux_arm_6/
+      - dist/linux_arm64/
     expire_in: 30 mins
   tags:
     - docker

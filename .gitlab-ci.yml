@@ -35,7 +35,7 @@ docker:
     - apk add --no-cache make
     - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-amd64 -O manifest-tool
     - chmod 555 manifest-tool
-    - docker login -u $(DOCKER_USER) -p $(DOCKER_PASSWORD) ;
+    - make login
     - curl -sL https://git.io/goreleaser | bash
     - ./manifest-tool push from-spec spec.yaml
 

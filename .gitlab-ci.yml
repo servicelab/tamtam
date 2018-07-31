@@ -28,12 +28,10 @@ docker:
   services:
     - docker:dind
   script:
-    - apk add --no-cache make curl bash git
+    - apk add --no-cache make curl bash git go
     - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-amd64 -O manifest-tool
     - chmod 555 manifest-tool
     - make login
-    - ls -al
-    - git status
     - curl -sL https://git.io/goreleaser | bash
     - ./manifest-tool push from-spec spec.yaml
 

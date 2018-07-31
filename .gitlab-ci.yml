@@ -4,18 +4,18 @@ stages:
 
 before_script:
   - export SERVER_NAMESPACE=github.com/servicelab
+  - mkdir -p /go/src/$SERVER_NAMESPACE
+  - export GOPATH=/go
+  - ln -s $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
+  - cd /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
+  - export GOBIN=$GOPATH/bin
+  - export PATH=$PATH:$GOPATH/bin
 
 build:
   stage: build
   image: golang:1.10
   script:
-    - mkdir -p /go/src/$SERVER_NAMESPACE
-    - export GOPATH=/go
-    - ln -s $CI_PROJECT_DIR /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
-    - cd /go/src/$SERVER_NAMESPACE/$CI_PROJECT_NAME
-    - export GOBIN=$GOPATH/bin
-    - export PATH=$PATH:$GOPATH/bin
-    - make release -j 6
+    - make cross -j 6
   artifacts:
     paths:
       - dist

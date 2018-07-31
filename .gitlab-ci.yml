@@ -25,8 +25,6 @@ release:
   only:
     - tags
     - triggers
-  services:
-    - docker:dind
   script:
     - curl -sL https://git.io/goreleaser | bash
   artifacts:

@@ -15,7 +15,7 @@ build:
   stage: build
   image: golang:1.10
   script:
-    - make cross -j 6
+    - make cross
   artifacts:
     paths:
       - dist
@@ -32,7 +32,7 @@ docker:
   services:
     - docker:dind
   script:
-    - apk add --no-cache make
+    - apk add --no-cache make curl bash
     - wget https://github.com/estesp/manifest-tool/releases/download/v0.7.0/manifest-tool-linux-amd64 -O manifest-tool
     - chmod 555 manifest-tool
     - make login

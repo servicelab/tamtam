@@ -63,9 +63,6 @@ $(DOCKER): login
 	# push if user is set
 	@if [ "$(DOCKER_USER)" != "" ]; then \
 		docker push $(image):$(version)-$(os)-$(arch) ; \
-		if ["$(branchtag)" != "" ]; then \
-			docker push $(image)$(branchtag)-$(os)-$(arch) ; \
-		fi \
 	fi
 
 .PHONY: build

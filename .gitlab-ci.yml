@@ -29,7 +29,7 @@ release:
     - curl -sL https://git.io/goreleaser | bash
   artifacts:
     paths:
-      - /go/src/github.com/servicelab/$CI_PROJECT_NAME/dist
+      - dist
     expire_in: 30 mins
   tags:
     - docker

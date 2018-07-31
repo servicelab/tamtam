@@ -39,7 +39,7 @@ release:
     - docker
 
 docker:
-  stage: push
+  stage: docker
   image: docker
   only:
     - tags

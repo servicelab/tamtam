@@ -6,7 +6,7 @@ builds:
 - env:
   - CGO_ENABLED=0
   ldflags:
-  - -s -w -X $(package)/cmd.Version={{.Version}} -X $(package)/cmd.BuildTime={{.Date}} -X $(package)/cmd.GitHash={{.Commit}}
+  - -s -w -X github.com/servicelab/{{.ProjectName}}/cmd.Version={{.Version}} -X github.com/servicelab/{{.ProjectName}}/cmd.BuildTime={{.Date}} -X github.com/servicelab/{{.ProjectName}}/cmd.GitHash={{.Commit}}
   goos:
   - windows
   - linux

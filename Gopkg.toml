@@ -7,8 +7,8 @@
   version = "~1.6.0"
 
 [[constraint]]
-  branch = "master"
   name = "github.com/clockworksoul/smudge"
+  version = "~1.0.0"
 
 [[constraint]]
   branch = "master"

@@ -21,6 +21,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
 	"github.com/clockworksoul/smudge"
@@ -266,6 +267,9 @@ and listens to RPC command on the RCP interface.`,
 			}
 		}
 		ip := net.ParseIP(bind)
+		if ip == nil {
+			log.Fatal().Msgf("Failed to parse ip address: %s", bind)
+		}
 		smudge.SetListenIP(ip)
 		smudge.SetLogger(util.SmudgeLogger{})
 		smudge.SetLogThreshold(smudge.LogWarn)
@@ -300,7 +304,7 @@ and listens to RPC command on the RCP interface.`,
 
 		go func() {
 			log.Info().Msgf("Listening for gRPC at %s", viper.GetString("rpc"))
-			if ip.To4() != nil {
+			if ip.To4() != nil || strings.HasPrefix(bind, "[") {
 				log.Info().Msgf("Listening for gossip at %s:%d", bind, port)
 			} else {
 				log.Info().Msgf("Listening for gossip at [%s]:%d", bind, port)

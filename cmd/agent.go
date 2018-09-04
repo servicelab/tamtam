@@ -267,6 +267,9 @@ and listens to RPC command on the RCP interface.`,
 			}
 		}
 		ip := net.ParseIP(bind)
+		if ip == nil {
+			log.Fatal().Msgf("Failed to parse ip address: %s", bind)
+		}
 		smudge.SetListenIP(ip)
 		smudge.SetLogger(util.SmudgeLogger{})
 		smudge.SetLogThreshold(smudge.LogWarn)

@@ -15,7 +15,7 @@
 
 TamTam is a utility that provides a command line and [gRPC](https://grpc.io) interface to [Smudge](https://github.com/clockworksoul/smudge).
 
-TamTam allows you to create a decentralized cluster on top of an IP network (both IPv4 and IPv6 are supported). It has a similar but simplified function as [Serf](https://www.serf.io).
+TamTam allows you to create a decentralized cluster on top of an IP network (both IPv4 and IPv6 are supported). It has a similar but simplified function as [Serf](https://www.serf.io) but uses only UDP which allows it work over, for example, a [Thread](https://openthread.io) network.
 
 TamTam uses the [Smudge](https://github.com/clockworksoul/smudge) library that provides group member discovery, status dissemination and failure detection to the cluster. Smudge implements the SWIM protocol [(paper)](https://pdfs.semanticscholar.org/8712/3307869ac84fc16122043a4a313604bd948f.pdf) [(explained 1)](https://asafdav2.github.io/2017/swim-protocol/) [(explained 2)](https://prakhar.me/articles/swim/).
 

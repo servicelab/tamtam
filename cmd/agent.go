@@ -79,6 +79,9 @@ func (s *server) Leave(ctx context.Context, in *tt.NodeAddress) (*tt.Response, e
 // Broadcast sends an arbitrary data message to other
 // healthy nodes in the network.
 func (s *server) Broadcast(ctx context.Context, in *tt.Message) (*tt.Response, error) {
+	if len(in.Bytes) == 0 {
+		return &tt.Response{Code: tt.Response_ERROR}, errors.New("Cannot send a zero byte broadcast")
+	}
 	err := smudge.BroadcastBytes(in.Bytes)
 	if err != nil {
 		return &tt.Response{Code: tt.Response_ERROR}, err

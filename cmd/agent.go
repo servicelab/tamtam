@@ -46,6 +46,7 @@ var (
 	clusterName       string
 	ipv6              bool
 	max               int
+	iface             string
 )
 
 type server struct{}
@@ -217,23 +218,26 @@ func (s *server) LocalAddress(ctx context.Context, in *tt.Empty) (*tt.NodeAddres
 
 // Get preferred outbound ip of this machine
 func getOutboundIP(ipv6 bool) (string, error) {
-	var (
-		conn net.Conn
-		err  error
-	)
-
-	if ipv6 {
-		conn, err = net.Dial("udp", "2001:4860:4860::8888")
-	} else {
-		conn, err = net.Dial("udp", "8.8.8.8:80")
-	}
+	byNameInterface, err := net.InterfaceByName(iface)
 	if err != nil {
+		log.Debug().Msg("heh?")
 		return "", err
 	}
-
-	defer conn.Close()
-	localAddr := conn.LocalAddr().(*net.UDPAddr)
-	return localAddr.IP.String(), nil
+	addresses, err := byNameInterface.Addrs()
+	log.Debug().Msgf("addresses for %s: %v", iface, addresses)
+	for k, v := range addresses {
+		addr := strings.Split(v.String(), "/")[0]
+		log.Debug().Msgf("Found interface Address #%v : %v", k, addr)
+		ip := net.ParseIP(addr)
+		if ip != nil && !ip.IsLoopback() && !ip.IsLinkLocalUnicast() {
+			if ipv6 && ip.To4() == nil {
+				return ip.String(), nil
+			} else if !ipv6 && ip.To4() != nil {
+				return ip.String(), nil
+			}
+		}
+	}
+	return "", errors.New("Cannot determine the IP address for the interface")
 }
 
 // agentCmd represents the agent command
@@ -248,6 +252,9 @@ and listens to RPC command on the RCP interface.`,
 				return errors.New("--ipv6 flag can only be used with the default bind address")
 			}
 			bind = "::"
+		}
+		if (bind == "0.0.0.0" || bind == "::") && iface == "" {
+			return errors.New("Specify the interface if you do not specify the bind address")
 		}
 		return nil
 	},
@@ -265,13 +272,13 @@ and listens to RPC command on the RCP interface.`,
 			}
 		}()
 
-		// configure smudge
-		if bind == "0.0.0.0" {
+		if bind == "0.0.0.0" || bind == "::" {
 			bind, err = getOutboundIP(ipv6)
 			if err != nil {
-				log.Fatal().Msgf("Failed to determine bind address: %v", err)
+				log.Fatal().Msgf("Failed to guess a suitable bind address. Please manually specify a bind address on the commandline.")
 			}
 		}
+		// configure smudge
 		ip := net.ParseIP(bind)
 		if ip == nil {
 			log.Fatal().Msgf("Failed to parse ip address: %s", bind)
@@ -330,6 +337,7 @@ func init() {
 	agentCmd.Flags().IntVarP(&port, "port", "p", smudge.GetListenPort(), "list port for the gossip network")
 	agentCmd.Flags().StringVarP(&bind, "bind", "b", "0.0.0.0", "listen address for the gossip network")
 	agentCmd.Flags().BoolVarP(&ipv6, "ipv6", "6", false, "alias for -b [::], listens to all IPv6 interfaces")
+	agentCmd.Flags().StringVarP(&iface, "iface", "i", "", "interface to use")
 	agentCmd.Flags().IntVar(&hbm, "heartbeat", smudge.GetHeartbeatMillis(), "heartbeat used within the gossip network")
 	agentCmd.Flags().IntVar(&max, "max", 0, "maximum size for broadcast messages, set to 0 means 256 for IPv4 and 512 for IPv6")
 	agentCmd.Flags().BoolVar(&multicast, "multicast", false, "enable multicast node discovery")
